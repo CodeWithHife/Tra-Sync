@@ -1,75 +1,61 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import {
   Shield, Zap, BarChart3, ShoppingCart, ArrowRight, Package, TrendingUp,
-  MapPin, CheckCircle2, RefreshCw, FileText, Settings, Radio
 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { icon: ShoppingCart, label: 'POS Terminal', desc: 'Process sales & lock inventory', path: '/pos', color: '#10B981', bg: '#10B98115' },
-  { icon: BarChart3, label: 'Admin Panel', desc: 'Audit & analytics dashboard', path: '/admin', color: '#3B82F6', bg: '#3B82F615' },
-  { icon: Package, label: 'Inventory Guard', desc: 'Track stock reservations', path: '/admin', color: '#10B981', bg: '#10B98115' },
-  { icon: TrendingUp, label: 'EOD Reports', desc: 'Download audit summaries', path: '/admin', color: '#F59E0B', bg: '#F59E0B15' },
+  { icon: ShoppingCart, label: 'POS Terminal', desc: 'Process sales & lock inventory', path: '/pos',    color: '#00d4ff', bg: '#00d4ff10' },
+  { icon: BarChart3,    label: 'Admin Panel',  desc: 'Audit & analytics dashboard',   path: '/admin',   color: '#a855f7', bg: '#a855f710' },
+  { icon: Package,      label: 'Inventory',    desc: 'Track stock reservations',       path: '/admin',   color: '#00ff87', bg: '#00ff8710' },
+  { icon: TrendingUp,   label: 'Reports',      desc: 'Download & email reports',       path: '/admin',   color: '#fbbf24', bg: '#fbbf2410' },
 ];
 
 export default function DashboardPage() {
   const router = useRouter();
 
-  return (
-    <div className="min-h-screen bg-[#090D16] text-white font-sans flex flex-col justify-between px-4 py-8 sm:py-12 relative overflow-hidden selection:bg-[#10B981] selection:text-[#090D16]">
-      {/* Background radial lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#10B981]/10 via-[#10B981]/5 to-transparent blur-3xl pointer-events-none -z-10" />
+  // Auto-redirect to admin after 8s if user is idle
+  useEffect(() => {
+    const t = setTimeout(() => router.push('/admin'), 8000);
+    return () => clearTimeout(t);
+  }, [router]);
 
-      {/* Main Container */}
-      <div className="relative z-10 max-w-3xl w-full mx-auto my-auto space-y-6">
-        
-        {/* Header Logo */}
-        <div className="flex flex-col items-center justify-center text-center space-y-3 mb-4">
-          <div 
-            onClick={() => router.push('/')}
-            className="w-14 h-14 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center text-[#10B981] shadow-lg shadow-[#10B981]/15 cursor-pointer hover:scale-105 transition-transform"
-          >
-            <Shield className="w-7 h-7 fill-[#10B981]/20" />
+  return (
+    <div className="min-h-screen bg-[#040817] flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#00d4ff] opacity-[0.03] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#a855f7] opacity-[0.03] rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 max-w-2xl w-full animate-slide-up">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#00d4ff] to-[#0066ff] flex items-center justify-center animate-pulse-glow">
+            <Shield size={24} className="text-[#040817]" />
           </div>
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-white">
-              TRA<span className="text-[#10B981]">-SYNC</span>
-            </h1>
-            <p className="text-slate-400 text-xs sm:text-sm font-medium mt-0.5">
-              Merchant Control Center &amp; Terminal Node
-            </p>
+            <div className="text-3xl font-black tracking-widest text-white">
+              TRA<span className="text-[#00d4ff]">-SYNC</span>
+            </div>
+            <div className="text-slate-500 text-sm">Merchant Control Center</div>
           </div>
         </div>
 
-        {/* System Status Banner */}
-        <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 backdrop-blur-xl shadow-xl shadow-[#10B981]/5">
-          <div className="flex items-center gap-3">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-ping" />
-            <div className="flex items-center gap-2">
-              <span className="text-[#10B981] font-bold text-xs uppercase tracking-wider">
-                FRAUD SHIELD ACTIVE
-              </span>
-              <span className="bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 text-[10px] font-mono px-2 py-0.5 rounded font-bold">
-                SUB-2S HOOK
-              </span>
-            </div>
+        {/* Status bar */}
+        <div className="card p-4 mb-8 flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#00ff87] animate-blink" />
+            <span className="text-[#00ff87] text-sm font-medium">Fraud Shield Active</span>
           </div>
-
-          <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#10B981]" />
-              <span>LA-100001-0842</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[#10B981] font-bold">
-              <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>LIVE LISTENING</span>
-            </div>
+          <div className="w-px h-4 bg-[#1a2550]" />
+          <div className="flex items-center gap-2">
+            <Zap size={14} className="text-[#00d4ff]" />
+            <span className="text-slate-400 text-sm">Real-time inventory lock enabled</span>
           </div>
         </div>
 
-        {/* Action Grid (2x2 on sm/md, 1 col on mobile) */}
-        <div className="grid sm:grid-cols-2 gap-4">
+        {/* Nav grid */}
+        <div className="grid grid-cols-2 gap-4 mb-8">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
@@ -77,53 +63,28 @@ export default function DashboardPage() {
                 key={item.label}
                 id={`dashboard-${item.label.toLowerCase().replace(/ /g, '-')}`}
                 onClick={() => router.push(item.path)}
-                className="bg-[#0F172A]/90 hover:bg-[#1E293B]/90 border border-slate-800 hover:border-[#10B981]/50 rounded-2xl p-6 text-left group transition-all duration-200 shadow-lg shadow-[#10B981]/5 flex flex-col justify-between"
+                className="card p-6 text-left hover:border-[#00d4ff40] group transition-all duration-200"
               >
-                <div>
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-slate-800"
-                    style={{ background: item.bg }}
-                  >
-                    <Icon className="w-5 h-5" style={{ color: item.color }} />
-                  </div>
-                  <div className="text-white font-bold text-lg mb-1 group-hover:text-[#10B981] transition-colors">
-                    {item.label}
-                  </div>
-                  <div className="text-slate-400 text-xs leading-relaxed">{item.desc}</div>
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                  style={{ background: item.bg }}
+                >
+                  <Icon size={20} style={{ color: item.color }} />
                 </div>
-
-                <div className="flex items-center gap-1.5 mt-5 text-xs font-semibold" style={{ color: item.color }}>
-                  <span>Launch Module</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <div className="text-white font-bold mb-1">{item.label}</div>
+                <div className="text-slate-500 text-xs">{item.desc}</div>
+                <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-xs" style={{ color: item.color }}>Open</span>
+                  <ArrowRight size={12} style={{ color: item.color }} />
                 </div>
               </button>
             );
           })}
         </div>
 
-        {/* Bottom Direct CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-          <button
-            onClick={() => router.push('/pos')}
-            className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2"
-            id="dash-open-pos"
-          >
-            <ShoppingCart className="w-4 h-4" /> Open POS Checkout Terminal
-          </button>
-          <button
-            onClick={() => router.push('/admin')}
-            className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm py-3.5 rounded-xl border border-slate-700 transition-colors flex items-center justify-center gap-2"
-            id="dash-open-admin"
-          >
-            <BarChart3 className="w-4 h-4 text-[#10B981]" /> Open Admin Audit Center
-          </button>
-        </div>
-
-      </div>
-
-      {/* Footer Note */}
-      <div className="text-center text-slate-500 text-xs font-mono z-10 pt-6">
-        © 2026 TRA-SYNC · Real-Time Merchant Control Center · NIPOST Location Anchored
+        <p className="text-center text-slate-600 text-xs">
+          Auto-redirecting to Admin Panel in a few seconds…
+        </p>
       </div>
     </div>
   );

@@ -1,12 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import {
   Shield, Zap, Lock, CheckCircle2, AlertTriangle, MapPin,
   ArrowRight, BarChart3, Brain, Receipt, QrCode,
-  Play, Radio, Check, MessageSquare, Calculator, Landmark,
-  Menu, X
+  Play, Radio, Check, MessageSquare, Calculator, Landmark
 } from 'lucide-react';
 
 const NAV_LINKS = [
@@ -16,7 +14,6 @@ const NAV_LINKS = [
   { label: 'Audit Engine', href: '#audit' },
 ];
 
-<<<<<<< HEAD
 const METRICS = [
   { label: 'Transactions Verified', value: '2.4M+', icon: CheckCircle2, color: '#10B981' },
   { label: 'System Uptime', value: '99.98%', icon: Shield, color: '#3b82f6' },
@@ -24,27 +21,14 @@ const METRICS = [
   { label: 'Sync Speed', value: '1.2s', icon: Zap, color: '#10B981' },
 ];
 
-=======
->>>>>>> c108baab430a01d7be03f94c675613b6598449c5
 export default function HomePage() {
   const router = useRouter();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMobileMenuOpen(false);
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-white font-sans overflow-x-hidden selection:bg-[#10B981] selection:text-[#090D16] scroll-smooth">
+    <div className="min-h-screen bg-[#090D16] text-white font-sans overflow-x-hidden selection:bg-[#10B981] selection:text-[#090D16]">
       {/* ── NAVBAR ────────────────────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#090D16]/95 backdrop-blur-md border-b border-slate-800/80 transition-all">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#090D16]/90 backdrop-blur-md border-b border-slate-800/80 transition-all">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          
           {/* Logo */}
           <div 
             onClick={() => router.push('/')}
@@ -58,22 +42,21 @@ export default function HomePage() {
             </span>
           </div>
 
-          {/* Desktop Navigation Links */}
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-slate-300 hover:text-[#10B981] text-sm font-medium transition-colors cursor-pointer"
+                className="text-slate-300 hover:text-[#10B981] text-sm font-medium transition-colors"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* Desktop Auth Action Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Auth Action Buttons */}
+          <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/auth')}
               className="text-slate-300 hover:text-white text-sm font-medium px-4 py-2 transition-colors"
@@ -89,58 +72,7 @@ export default function HomePage() {
               Create Store Account
             </button>
           </div>
-
-          {/* Mobile Hamburger Toggle Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-300 hover:text-white bg-slate-900 border border-slate-800 rounded-lg transition-colors focus:outline-none"
-            aria-label="Toggle Mobile Menu"
-            id="mobile-hamburger-btn"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6 text-[#10B981]" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
-
-        {/* Mobile Dropdown Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-[#090D16]/98 border-b border-slate-800 px-6 pt-4 pb-8 space-y-5 animate-in slide-in-from-top-4 duration-200">
-            <div className="flex flex-col space-y-3 border-b border-slate-800/80 pb-4">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-slate-300 hover:text-[#10B981] text-base font-medium py-1 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="flex flex-col space-y-3 pt-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  router.push('/auth');
-                }}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3 rounded-lg border border-slate-700/80 transition-colors text-center"
-                id="mobile-nav-login"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  router.push('/auth');
-                }}
-                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-lg transition-all shadow-md shadow-[#10B981]/20 text-center"
-                id="mobile-nav-create-account"
-              >
-                Create Store Account
-              </button>
-            </div>
-          </div>
-        )}
       </nav>
 
       {/* ── HERO SECTION ─────────────────────────────────────────────────── */}
@@ -440,16 +372,16 @@ export default function HomePage() {
             <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-[#1E293B] border border-slate-700/60 text-slate-300 flex items-center justify-center mb-6">
-                  <Landmark className="w-5 h-5 text-[#10B981]" />
+                  <Landmark className="w-5 h-5" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Direct Bank Settlement</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Supported by Major Nigerian Banks</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">
-                  Instant API webhooks connected directly across all commercial Nigerian banks guarantee sub-second confirmation and zero checkout delays.
+                  Direct rails with GTBank, Zenith Bank, Providus Bank, Access Bank, and FirstBank ensure fast routing, low failure rates, and reliable notification speeds.
                 </p>
               </div>
 
-              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase">
-                ALL NIGERIAN BANKS SUPPORTED
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-slate-300 font-mono text-xs font-bold tracking-wider uppercase">
+                GTBANK • ZENITH • PROVIDUS • ACCESS
               </div>
             </div>
 
@@ -458,7 +390,6 @@ export default function HomePage() {
         </div>
       </section>
 
-<<<<<<< HEAD
       {/* ── METRICS STRIP ───────────────────────────────────────────────── */}
       <section className="py-16 px-6 bg-slate-950/60 border-y border-slate-800/80">
         <div className="max-w-5xl mx-auto">
@@ -473,84 +404,15 @@ export default function HomePage() {
                 </div>
               );
             })}
-=======
-      {/* ── PLATFORM METRICS STRIP ───────────────────────────────────────── */}
-      <section className="py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-3xl lg:text-4xl font-black text-[#10B981] font-sans">₦0</div>
-                <div className="text-slate-400 text-xs font-medium mt-1">Charge on Failed Tries</div>
-              </div>
-              <div>
-                <div className="text-3xl lg:text-4xl font-black text-white font-sans">1.2s</div>
-                <div className="text-slate-400 text-xs font-medium mt-1">Average Verification</div>
-              </div>
-              <div>
-                <div className="text-3xl lg:text-4xl font-black text-white font-sans">99.98%</div>
-                <div className="text-slate-400 text-xs font-medium mt-1">Gateway Uptime</div>
-              </div>
-              <div>
-                <div className="text-3xl lg:text-4xl font-black text-[#10B981] font-sans">14,800+</div>
-                <div className="text-slate-400 text-xs font-medium mt-1">Nigerian Retail Tills</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── READY TO PROTECT STORE REVENUE CTA CARD ─────────────────────── */}
-      <section className="py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl overflow-hidden grid md:grid-cols-12 items-center">
-            
-            <div className="md:col-span-8 p-8 md:p-10 space-y-3">
-              <div className="text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase">
-                NO HARDWARE LOCK-IN • SETUP IN 5 MINS
-              </div>
-              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                Ready to protect your store revenue?
-              </h2>
-              <p className="text-slate-400 text-sm md:text-base font-normal leading-relaxed max-w-xl">
-                Sign up today and run test transfers on your existing phone, tablet, or POS terminal without signing long bank contracts.
-              </p>
-            </div>
-
-            <div className="md:col-span-4 bg-[#1E293B]/60 p-8 md:p-10 flex flex-col sm:flex-row md:flex-col gap-3 justify-center items-stretch md:items-start h-full border-t md:border-t-0 md:border-l border-slate-800/80">
-              <button
-                onClick={() => router.push('/auth')}
-                className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm px-6 py-3.5 rounded-lg transition-all shadow-md shadow-[#10B981]/20 hover:shadow-[#10B981]/40 text-center w-full"
-                id="cta-get-started"
-              >
-                Get Started Now
-              </button>
-              <button
-                onClick={() => router.push('/onboard')}
-                className="bg-[#1E293B] hover:bg-[#334155] text-white font-medium text-sm px-6 py-3.5 rounded-lg border border-slate-700/60 transition-colors text-center w-full"
-                id="cta-setup-guide"
-              >
-                Terminal Setup Guide
-              </button>
-            </div>
-
->>>>>>> c108baab430a01d7be03f94c675613b6598449c5
           </div>
         </div>
       </section>
 
       {/* ── NIPOST LOCATION ANCHOR ───────────────────────────────────────── */}
-<<<<<<< HEAD
       <section className="py-20 px-6" id="location">
         <div className="max-w-6xl mx-auto">
           <div className="bg-[#0F172A]/90 hover:border-[#10B981]/40 transition-all border border-slate-800 rounded-3xl p-8 md:p-12 md:flex items-center gap-10 shadow-2xl">
             <div className="w-20 h-20 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-6 md:mb-0 shrink-0 shadow-lg shadow-[#10B981]/20">
-=======
-      <section className="py-20 px-6 border-t border-slate-800/80" id="location">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-slate-800 rounded-3xl p-8 md:p-10 md:flex items-center gap-10">
-            <div className="w-20 h-20 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-6 md:mb-0 shrink-0 shadow-lg shadow-[#10B981]/10">
->>>>>>> c108baab430a01d7be03f94c675613b6598449c5
               <MapPin className="w-10 h-10 text-[#10B981]" />
             </div>
             <div className="space-y-4 flex-1">
@@ -624,6 +486,34 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── BOTTOM CTA ──────────────────────────────────────────────────── */}
+      <section className="py-24 px-6 text-center">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+            Ready to Secure Your Store Operations?
+          </h2>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">
+            Join hundreds of verified merchants eliminating payment fraud and inventory losses today.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button
+              onClick={() => router.push('/auth')}
+              className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-lg px-9 py-4 rounded-xl transition-all shadow-xl shadow-[#10B981]/30 hover:shadow-[#10B981]/50 hover:-translate-y-0.5"
+              id="final-cta-start"
+            >
+              Get Started Now
+            </button>
+            <button
+              onClick={() => router.push('/onboard')}
+              className="bg-slate-800 hover:bg-slate-700 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-slate-700 transition-all hover:-translate-y-0.5"
+              id="final-cta-onboard"
+            >
+              Configure Store Terminal
+            </button>
           </div>
         </div>
       </section>
