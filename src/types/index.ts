@@ -41,6 +41,19 @@ export interface Order {
   created_at: string;
 }
 
+// ── Dynamic Virtual Account Number (VAN) ─────────────────────────────────────
+export interface VirtualAccount {
+  order_ref: string;          // e.g. "TS-892" — matches Order.ref
+  bank_name: string;          // e.g. "Wema Bank"
+  bank_code: string;          // e.g. "035"
+  account_number: string;     // 10-digit dynamic account
+  account_name: string;       // Merchant display name
+  amount: number;             // Exact amount customer must transfer
+  currency: 'NGN';
+  expires_at: string;         // ISO timestamp — 15 min window
+  created_at: string;
+}
+
 export interface PostcodeResult {
   postcode: string;
   street: string;

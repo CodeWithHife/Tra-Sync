@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Shield, Building2, MapPin, CheckCircle2, Loader2,
-  ChevronRight, Globe, AlertCircle, Store, ArrowRight, ArrowLeft
+  Shield, Building2, MapPin, CheckCircle, Loader2,
+  ChevronRight, Globe, AlertCircle, Store, ArrowRight,
 } from 'lucide-react';
 import { PostcodeResult } from '@/types';
 
@@ -18,7 +18,7 @@ const INDUSTRIES = [
   'Auto Parts & Accessories',
   'Furniture & Home Goods',
   'Telecommunications',
-  'Other Services',
+  'Other',
 ];
 
 type Step = 1 | 2 | 3 | 4;
@@ -78,134 +78,104 @@ export default function OnboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-white font-sans flex flex-col justify-between px-4 py-8 relative overflow-hidden selection:bg-[#10B981] selection:text-[#090D16]">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#10B981]/10 via-[#10B981]/5 to-transparent blur-3xl pointer-events-none -z-10" />
+    <div className="min-h-screen bg-[#040817] flex flex-col items-center justify-center px-4 py-16 relative overflow-hidden">
+      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-[#00d4ff] opacity-[0.03] rounded-full blur-3xl pointer-events-none" />
 
-      {/* Top Header Link */}
-      <div className="max-w-xl mx-auto w-full flex items-center justify-between z-10">
-        <button
-          onClick={() => router.push('/auth')}
-          className="text-slate-400 hover:text-[#10B981] text-xs font-semibold flex items-center gap-1.5 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Auth
-        </button>
-        <span className="text-[#10B981] font-mono text-[11px] font-bold">SETUP IN 3 MINS</span>
-      </div>
-
-      {/* Main Form Container */}
-      <div className="w-full max-w-xl mx-auto my-auto py-6 relative z-10">
-        
-        {/* Logo Header */}
-        <div className="flex flex-col items-center mb-8 text-center">
-          <div 
-            onClick={() => router.push('/')}
-            className="w-12 h-12 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center text-[#10B981] mb-3 shadow-lg shadow-[#10B981]/15 cursor-pointer hover:scale-105 transition-transform"
-          >
-            <Shield className="w-6 h-6 fill-[#10B981]/20" />
+      <div className="w-full max-w-lg relative z-10">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-2 mb-10">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#0066ff] flex items-center justify-center">
+            <Shield size={18} className="text-[#040817]" />
           </div>
-          <h1 className="text-2xl font-black tracking-tight text-white">
-            TRA<span className="text-[#10B981]">-SYNC</span>
-          </h1>
-          <p className="text-slate-400 text-xs font-medium mt-1">Merchant Terminal Onboarding</p>
+          <span className="text-2xl font-black tracking-widest text-white">
+            TRA<span className="text-[#00d4ff]">-SYNC</span>
+          </span>
         </div>
 
-        {/* Step Progress Bar */}
-        <div className="flex items-center gap-2 mb-8 px-2">
+        {/* Progress bar */}
+        <div className="flex items-center gap-2 mb-10">
           {STEPS.map((s, i) => (
             <div key={s.num} className="flex items-center gap-2 flex-1">
               <div className="flex flex-col items-center gap-1 shrink-0">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                     step > s.num
-                      ? 'bg-[#10B981] text-[#090D16]'
+                      ? 'bg-[#00d4ff] text-[#040817]'
                       : step === s.num
-                      ? 'bg-[#10B981] text-[#090D16] shadow-md shadow-[#10B981]/30 ring-2 ring-[#10B981]/40'
-                      : 'bg-slate-900 text-slate-500 border border-slate-800'
+                      ? 'bg-gradient-to-br from-[#00d4ff] to-[#0066ff] text-[#040817]'
+                      : 'bg-[#0f1a3e] text-slate-500 border border-[#1a2550]'
                   }`}
                 >
-                  {step > s.num ? <CheckCircle2 className="w-4 h-4 stroke-[3]" /> : s.num}
+                  {step > s.num ? <CheckCircle size={14} /> : s.num}
                 </div>
-                <span className={`text-[10px] font-medium ${step >= s.num ? 'text-[#10B981]' : 'text-slate-600'}`}>
+                <span className={`text-[10px] font-medium ${step >= s.num ? 'text-[#00d4ff]' : 'text-slate-600'}`}>
                   {s.label}
                 </span>
               </div>
               {i < STEPS.length - 1 && (
-                <div className={`flex-1 h-0.5 mt-[-14px] transition-all duration-500 ${step > s.num ? 'bg-[#10B981]' : 'bg-slate-800'}`} />
+                <div className={`flex-1 h-px mt-[-12px] transition-all duration-500 ${step > s.num ? 'bg-[#00d4ff]' : 'bg-[#1a2550]'}`} />
               )}
             </div>
           ))}
         </div>
 
-        {/* Card Box */}
-        <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-[#10B981]/5">
-          
+        {/* Card */}
+        <div className="card p-8 animate-slide-up">
           {/* ── Step 1: Welcome ──────────────────────────────────────────── */}
           {step === 1 && (
-            <div className="text-center space-y-6">
-              <div className="w-16 h-16 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center mx-auto shadow-lg shadow-[#10B981]/10">
-                <Shield className="w-8 h-8 text-[#10B981]" />
+            <div className="text-center">
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#00d4ff20] to-[#0066ff20] border border-[#00d4ff25] flex items-center justify-center mx-auto mb-6 animate-float">
+                <Shield size={36} className="text-[#00d4ff]" />
               </div>
-              
-              <div className="space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-black text-white">Welcome to TRA-SYNC</h2>
-                <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
-                  Configure your store terminal in 3 quick steps. Start protecting your sales against fake payment alerts immediately.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 pt-2">
+              <h2 className="text-3xl font-black text-white mb-3">Welcome to TRA-SYNC</h2>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                Let&apos;s set up your merchant terminal in 3 quick steps. You&apos;ll be protected from
+                payment fraud within minutes.
+              </p>
+              <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
-                  { icon: Building2, label: 'Business Profile', color: '#10B981' },
-                  { icon: Globe,     label: 'NIPOST Address', color: '#3B82F6' },
-                  { icon: CheckCircle2, label: 'Live POS Shield', color: '#10B981' },
+                  { icon: Building2, label: 'Business Info', color: '#00d4ff' },
+                  { icon: Globe,     label: 'NIPOST Address', color: '#a855f7' },
+                  { icon: CheckCircle, label: 'Go Live',     color: '#00ff87' },
                 ].map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={item.label} className="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 flex flex-col items-center gap-2">
-                      <Icon className="w-5 h-5" style={{ color: item.color }} />
-                      <span className="text-slate-300 text-xs font-medium text-center">{item.label}</span>
+                    <div key={item.label} className="bg-[#0f1a3e] rounded-xl p-4 flex flex-col items-center gap-2">
+                      <Icon size={20} style={{ color: item.color }} />
+                      <span className="text-slate-400 text-xs text-center">{item.label}</span>
                     </div>
                   );
                 })}
               </div>
-
-              <button 
-                id="onboard-start" 
-                onClick={advance} 
-                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 hover:shadow-[#10B981]/40 flex items-center justify-center gap-2 mt-4"
-              >
-                Start Store Configuration <ArrowRight className="w-4 h-4" />
+              <button id="onboard-start" onClick={advance} className="btn-primary w-full flex items-center justify-center gap-2">
+                Let&apos;s Begin <ArrowRight size={16} />
               </button>
             </div>
           )}
 
           {/* ── Step 2: Business Info ────────────────────────────────────── */}
           {step === 2 && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center shrink-0">
-                  <Building2 className="w-5 h-5 text-[#10B981]" />
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-[#00d4ff20] border border-[#00d4ff25] flex items-center justify-center">
+                  <Building2 size={20} className="text-[#00d4ff]" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-white">Business Details</h2>
-                  <p className="text-slate-400 text-xs">Enter your official retail store name &amp; category</p>
+                  <h2 className="text-xl font-bold text-white">Business Information</h2>
+                  <p className="text-slate-500 text-sm">Tell us about your business</p>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div>
-                  <label className="text-slate-400 text-xs font-semibold uppercase tracking-wider block mb-1.5">
-                    Business / Store Name
-                  </label>
+                  <label className="text-slate-400 text-xs uppercase tracking-wider block mb-2">Business Name</label>
                   <div className="relative">
-                    <Store className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                    <Store size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
                     <input
                       id="onboard-biz-name"
                       type="text"
-                      required
-                      className="w-full bg-slate-900/90 border border-slate-700/80 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] text-white rounded-xl pl-10 pr-4 py-3 text-sm transition-colors outline-none font-medium placeholder:text-slate-600"
-                      placeholder="e.g. Apex Retail Supermarket"
+                      className="input-field pl-10"
+                      placeholder="Chidi Superstore"
                       value={business.name}
                       onChange={(e) => setBusiness((b) => ({ ...b, name: e.target.value }))}
                     />
@@ -213,18 +183,16 @@ export default function OnboardPage() {
                 </div>
 
                 <div>
-                  <label className="text-slate-400 text-xs font-semibold uppercase tracking-wider block mb-1.5">
-                    Industry Category
-                  </label>
+                  <label className="text-slate-400 text-xs uppercase tracking-wider block mb-2">Industry Type</label>
                   <select
                     id="onboard-industry"
-                    className="w-full bg-slate-900 border border-slate-700/80 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] text-white rounded-xl px-4 py-3 text-sm transition-colors outline-none font-medium"
+                    className="input-field appearance-none"
                     value={business.industry}
                     onChange={(e) => setBusiness((b) => ({ ...b, industry: e.target.value }))}
                   >
-                    <option value="" disabled>Select your store industry…</option>
+                    <option value="" disabled>Select your industry…</option>
                     {INDUSTRIES.map((ind) => (
-                      <option key={ind} value={ind} className="bg-slate-900 text-white">{ind}</option>
+                      <option key={ind} value={ind}>{ind}</option>
                     ))}
                   </select>
                 </div>
@@ -234,84 +202,82 @@ export default function OnboardPage() {
                 id="onboard-biz-next"
                 onClick={advance}
                 disabled={!canAdvance()}
-                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed mt-6"
+                className="btn-primary w-full mt-8 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Continue to Location <ChevronRight className="w-4 h-4" />
+                Continue <ChevronRight size={16} />
               </button>
             </div>
           )}
 
           {/* ── Step 3: NIPOST Postcode ──────────────────────────────────── */}
           {step === 3 && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5 text-[#10B981]" />
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-[#a855f720] border border-[#a855f725] flex items-center justify-center">
+                  <MapPin size={20} className="text-[#a855f7]" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-white">NIPOST Address Verification</h2>
-                  <p className="text-slate-400 text-xs">Anchor terminal to official physical postcode</p>
+                  <p className="text-slate-500 text-sm">Verify your physical business location</p>
                 </div>
               </div>
 
-              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-                Enter your NIPOST digital postcode to verify store address.
-                <span className="text-[#10B981] font-semibold cursor-pointer ml-1" onClick={() => setPostcode('LA-100001-0842')}>
-                  (Try: LA-100001-0842)
-                </span>
-              </p>
-
-              <div className="flex gap-2">
-                <input
-                  id="onboard-postcode"
-                  type="text"
-                  className="bg-slate-900/90 border border-slate-700/80 focus:border-[#10B981] text-white font-mono tracking-widest rounded-xl px-4 py-3 text-sm flex-1 uppercase outline-none"
-                  placeholder="LA-100001-0842"
-                  value={postcode}
-                  onChange={(e) => { setPostcode(e.target.value.toUpperCase()); setPostcodeError(''); setPostcodeResult(null); }}
-                  onKeyDown={(e) => e.key === 'Enter' && lookupPostcode()}
-                />
-                <button
-                  id="onboard-postcode-verify"
-                  onClick={lookupPostcode}
-                  disabled={postcodeLoading}
-                  className="bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs px-5 rounded-xl border border-slate-700 shrink-0 flex items-center gap-2 transition-colors disabled:opacity-60"
-                >
-                  {postcodeLoading ? <Loader2 className="w-4 h-4 animate-spin text-[#10B981]" /> : 'Verify'}
-                </button>
+              <div>
+                <label className="text-slate-400 text-xs uppercase tracking-wider block mb-2">Business Address or NIPOST Digital Postcode</label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    id="onboard-postcode"
+                    type="text"
+                    className="input-field flex-1"
+                    placeholder="e.g., 12 Allen Avenue, Ikeja OR LA-100001-0842"
+                    value={postcode}
+                    onChange={(e) => { setPostcode(e.target.value); setPostcodeError(''); setPostcodeResult(null); }}
+                    onKeyDown={(e) => e.key === 'Enter' && lookupPostcode()}
+                  />
+                  <button
+                    id="onboard-postcode-verify"
+                    onClick={lookupPostcode}
+                    disabled={postcodeLoading}
+                    className="btn-ghost px-4 shrink-0 flex items-center gap-2 disabled:opacity-60"
+                  >
+                    {postcodeLoading ? <Loader2 size={16} className="animate-spin" /> : 'Verify'}
+                  </button>
+                </div>
+                <p className="text-slate-500 text-xs mb-5">
+                  Type your street address to auto-resolve your digital postcode. (Demo shortcut: Enter 'LA-100001-0842' or '12 Allen Avenue')
+                </p>
               </div>
 
               {postcodeError && (
-                <div className="flex items-start gap-2 bg-red-500/10 border border-red-500/30 text-red-400 text-xs px-4 py-3 rounded-xl">
-                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span>{postcodeError}</span>
+                <div className="flex items-start gap-2 bg-[#450a0a] border border-[#f8717130] text-[#f87171] text-sm px-4 py-3 rounded-lg mb-4">
+                  <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                  {postcodeError}
                 </div>
               )}
 
               {postcodeResult && (
-                <div className="bg-[#062c1d]/60 border border-[#10B981]/50 rounded-xl p-4 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
-                    <span className="text-[#10B981] font-bold text-xs uppercase tracking-wider">Address Resolved</span>
+                <div className="bg-[#0a1f10] border border-[#34d39930] rounded-xl p-5 mb-6 animate-slide-up">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle size={16} className="text-[#34d399]" />
+                      <span className="text-[#34d399] font-bold text-sm">Verified Location Badge</span>
+                    </div>
+                    <span className="bg-[#064e3b] text-[#34d399] px-2 py-1 rounded-full text-[10px] font-bold tracking-wider">
+                      TERMINAL GEOFENCED
+                    </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="space-y-3 text-sm">
                     <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-mono">Street Address</span>
-                      <span className="text-white font-medium">{postcodeResult.street}</span>
+                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-0.5">Assigned NIPOST Postcode</span>
+                      <span className="text-[#00d4ff] font-mono font-bold text-lg">{postcodeResult.postcode}</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-mono">LGA Zone</span>
-                      <span className="text-white font-medium">{postcodeResult.lga}</span>
+                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-0.5">Full Address</span>
+                      <span className="text-white font-medium">{postcodeResult.street}, {postcodeResult.lga}, {postcodeResult.state} State</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-mono">State</span>
-                      <span className="text-white font-medium">{postcodeResult.state}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-mono">GPS Coordinates</span>
-                      <span className="text-[#10B981] font-mono font-bold text-[11px]">
-                        {postcodeResult.lat.toFixed(4)}°N {postcodeResult.lng.toFixed(4)}°E
-                      </span>
+                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-0.5">Geofence Coordinates</span>
+                      <span className="text-white font-medium">{postcodeResult.lat.toFixed(4)}° N, {postcodeResult.lng.toFixed(4)}° E</span>
                     </div>
                   </div>
                 </div>
@@ -321,72 +287,63 @@ export default function OnboardPage() {
                 id="onboard-location-next"
                 onClick={advance}
                 disabled={!canAdvance()}
-                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed mt-4"
+                className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Confirm Location &amp; Deploy <ChevronRight className="w-4 h-4" />
+                Confirm & Lock Location <ChevronRight size={16} />
               </button>
             </div>
           )}
 
           {/* ── Step 4: Terminal Ready ───────────────────────────────────── */}
           {step === 4 && (
-            <div className="text-center space-y-6">
-              <div className="relative mx-auto w-20 h-20">
-                <div className="w-20 h-20 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center mx-auto shadow-xl shadow-[#10B981]/20">
-                  <CheckCircle2 className="w-10 h-10 text-[#10B981]" />
+            <div className="text-center">
+              <div className="relative mx-auto w-24 h-24 mb-6">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#00ff87] to-[#00d4ff] opacity-20 absolute inset-0 animate-ping" />
+                <div className="w-24 h-24 rounded-full bg-[#0a1f10] border-2 border-[#00ff87] flex items-center justify-center relative">
+                  <CheckCircle size={40} className="text-[#00ff87]" />
                 </div>
               </div>
-
-              <div className="space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-black text-white">Terminal Deployed!</h2>
-                <p className="text-slate-400 text-sm">
-                  <span className="text-white font-bold">{business.name || 'Your Business'}</span> is now active on TRA-SYNC real-time anti-fraud protocol.
+              <h2 className="text-3xl font-black text-white mb-2">Terminal Ready!</h2>
+              <p className="text-slate-400 mb-2">
+                <span className="text-white font-semibold">{business.name || 'Your Business'}</span> is now
+                enrolled in TRA-SYNC anti-fraud protection.
+              </p>
+              {postcodeResult && (
+                <p className="text-[#00d4ff] text-sm mb-8">
+                  📍 {postcodeResult.street}, {postcodeResult.lga}, {postcodeResult.state}
                 </p>
-                {postcodeResult && (
-                  <p className="text-[#10B981] font-mono text-xs pt-1 flex items-center justify-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-                    <span>{postcodeResult.street}, {postcodeResult.lga}, {postcodeResult.state}</span>
-                  </p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 pt-2">
-                <div className="bg-[#062c1d]/60 border border-[#10B981]/40 rounded-xl p-3.5 text-center">
-                  <div className="text-[#10B981] font-bold text-base">ACTIVE</div>
-                  <div className="text-slate-400 text-[11px] mt-0.5">Webhook Shield</div>
+              )}
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="bg-[#0a1f10] border border-[#00ff8730] rounded-xl p-4">
+                  <div className="text-[#00ff87] font-bold text-lg">ACTIVE</div>
+                  <div className="text-slate-500 text-xs mt-1">Fraud Shield</div>
                 </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center">
-                  <div className="text-white font-bold text-base">LOCKED</div>
-                  <div className="text-slate-400 text-[11px] mt-0.5">Inventory Guard</div>
+                <div className="bg-[#0f1a3e] border border-[#00d4ff30] rounded-xl p-4">
+                  <div className="text-[#00d4ff] font-bold text-lg">LOCKED</div>
+                  <div className="text-slate-500 text-xs mt-1">Inventory Guard</div>
                 </div>
               </div>
-
-              <div className="space-y-3 pt-2">
-                <button
-                  id="onboard-go-dashboard"
-                  onClick={() => router.push('/dashboard')}
-                  className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2"
-                >
-                  Launch Merchant Dashboard <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => router.push('/pos')}
-                  className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm py-3 rounded-xl border border-slate-700 transition-colors flex items-center justify-center gap-2"
-                  id="onboard-go-pos"
-                >
-                  Open POS Checkout Terminal
-                </button>
-              </div>
+              <button
+                id="onboard-go-dashboard"
+                onClick={() => router.push('/dashboard')}
+                className="btn-primary w-full flex items-center justify-center gap-2 animate-pulse-glow"
+              >
+                Go to Dashboard <ArrowRight size={16} />
+              </button>
+              <button
+                onClick={() => router.push('/pos')}
+                className="btn-ghost w-full mt-3 flex items-center justify-center gap-2"
+                id="onboard-go-pos"
+              >
+                Open POS Terminal
+              </button>
             </div>
           )}
-
         </div>
 
-      </div>
-
-      {/* Footer Note */}
-      <div className="text-center text-slate-500 text-[11px] font-mono z-10">
-        Step {step} of 4 · TRA-SYNC Merchant Onboarding Protocol
+        <p className="text-center text-slate-600 text-xs mt-6">
+          Step {step} of 4 · TRA-SYNC Onboarding
+        </p>
       </div>
     </div>
   );
