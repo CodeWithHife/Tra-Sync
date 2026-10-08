@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Shield, Eye, EyeOff, Mail, Phone, User, Lock, ArrowRight } from 'lucide-react';
 
 type Tab = 'login' | 'signup';
@@ -63,9 +64,15 @@ export default function AuthPage() {
         <div className="flex flex-col items-center mb-8">
           <div 
             onClick={() => router.push('/')}
-            className="cursor-pointer w-14 h-14 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-4 shadow-lg shadow-[#10B981]/10 hover:scale-105 transition-transform"
+            className="cursor-pointer w-16 h-16 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-4 shadow-lg shadow-[#10B981]/10 hover:scale-105 transition-transform p-2"
           >
-            <Shield size={26} className="text-[#10B981]" />
+            <Image
+              src="/logo/Gemini_Generated_Image_l3qrkql3qrkql3qr-removebg-preview.png"
+              alt="TRA-SYNC Logo"
+              width={56}
+              height={56}
+              className="w-12 h-12 object-contain"
+            />
           </div>
           <h1 className="text-2xl font-black tracking-widest text-white">
             TRA<span className="text-[#10B981]">-SYNC</span>

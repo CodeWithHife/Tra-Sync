@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Shield, BarChart3, Brain, Mail, AlertTriangle, CheckCircle,
   TrendingUp, RefreshCw, X, Loader2, ArrowLeft,
@@ -163,10 +164,17 @@ export default function AdminPage() {
       {/* ── Sidebar ──────────────────────────────────────────────────────── */}
       <aside className="w-64 bg-[#0B132B] border-r border-[#1E2A4F] flex flex-col sticky top-0 h-screen">
         <div className="p-6 border-b border-[#1E2A4F]">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00E676] to-[#00B359] flex items-center justify-center shadow-[0_0_10px_rgba(0,230,118,0.5)]">
-              <Shield size={16} className="text-[#0A0F1D]" />
-            </div>
+          <div 
+            onClick={() => router.push('/')}
+            className="flex items-center gap-3 mb-6 cursor-pointer group"
+          >
+            <Image
+              src="/logo/Gemini_Generated_Image_l3qrkql3qrkql3qr-removebg-preview.png"
+              alt="TRA-SYNC Logo"
+              width={32}
+              height={32}
+              className="w-8 h-8 object-contain group-hover:scale-105 transition-transform"
+            />
             <span className="font-black tracking-widest text-[#FFFFFF] text-xl drop-shadow-md">
               TRA<span className="text-[#00E676]">-SYNC</span>
             </span>

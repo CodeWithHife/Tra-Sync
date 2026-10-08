@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Shield, Zap, Lock, CheckCircle2, AlertTriangle, MapPin,
   ArrowRight, BarChart3, Brain, Receipt, QrCode,
@@ -34,9 +35,13 @@ export default function HomePage() {
             onClick={() => router.push('/')}
             className="flex items-center gap-2.5 cursor-pointer group"
           >
-            <div className="w-9 h-9 rounded-xl bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center text-[#10B981] group-hover:scale-105 transition-transform shadow-sm shadow-[#10B981]/20">
-              <Shield className="w-5 h-5 fill-[#10B981]/20" />
-            </div>
+            <Image
+              src="/logo/Gemini_Generated_Image_l3qrkql3qrkql3qr-removebg-preview.png"
+              alt="TRA-SYNC Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 object-contain group-hover:scale-105 transition-transform"
+            />
             <span className="text-xl font-black tracking-tight text-white">
               TRA<span className="text-[#10B981]">-SYNC</span>
             </span>

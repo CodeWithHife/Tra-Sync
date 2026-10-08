@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Image from 'next/image';
 import {
   Shield, Zap, BarChart3, ShoppingCart, ArrowRight, Package, TrendingUp, Radio, CheckCircle2
 } from 'lucide-react';
@@ -34,9 +35,13 @@ export default function DashboardPage() {
           onClick={() => router.push('/')}
           className="flex items-center justify-center gap-3 mb-10 cursor-pointer group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] group-hover:scale-105 transition-transform shadow-lg shadow-[#10B981]/10">
-            <Shield size={26} className="fill-[#10B981]/20" />
-          </div>
+          <Image
+            src="/logo/Gemini_Generated_Image_l3qrkql3qrkql3qr-removebg-preview.png"
+            alt="TRA-SYNC Logo"
+            width={48}
+            height={48}
+            className="w-12 h-12 object-contain group-hover:scale-105 transition-transform"
+          />
           <div>
             <div className="text-2xl sm:text-3xl font-black tracking-widest text-white">
               TRA<span className="text-[#10B981]">-SYNC</span>

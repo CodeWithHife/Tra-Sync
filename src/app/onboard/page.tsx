@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Shield, Building2, MapPin, CheckCircle, Loader2,
   ChevronRight, Globe, AlertCircle, Store, ArrowRight, Lock, Sparkles,
@@ -89,9 +90,13 @@ export default function OnboardPage() {
           onClick={() => router.push('/')}
           className="flex items-center justify-center gap-2.5 mb-8 sm:mb-10 cursor-pointer group"
         >
-          <div className="w-10 h-10 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] group-hover:scale-105 transition-transform shadow-md shadow-[#10B981]/10">
-            <Shield size={20} className="fill-[#10B981]/20" />
-          </div>
+          <Image
+            src="/logo/Gemini_Generated_Image_l3qrkql3qrkql3qr-removebg-preview.png"
+            alt="TRA-SYNC Logo"
+            width={40}
+            height={40}
+            className="w-10 h-10 object-contain group-hover:scale-105 transition-transform"
+          />
           <span className="text-2xl font-black tracking-widest text-white">
             TRA<span className="text-[#10B981]">-SYNC</span>
           </span>

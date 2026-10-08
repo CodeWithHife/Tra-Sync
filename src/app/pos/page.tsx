@@ -4,6 +4,7 @@ import {
   useState, useEffect, useRef
 } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Shield, Zap, CheckCircle, X, ArrowLeft, Copy, CheckCheck,
   Building2, Hash, Keyboard, ReceiptText, AlertCircle, Wifi, Printer, ChevronRight
@@ -300,9 +301,13 @@ export default function POSPage() {
             <ArrowLeft size={16} />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center">
-              <Shield size={13} className="text-[#10B981]" />
-            </div>
+            <Image
+              src="/logo/Gemini_Generated_Image_l3qrkql3qrkql3qr-removebg-preview.png"
+              alt="TRA-SYNC Logo"
+              width={28}
+              height={28}
+              className="w-7 h-7 object-contain"
+            />
             <span className="font-black tracking-widest text-white text-base">
               TRA<span className="text-[#10B981]">-SYNC</span>
               <span className="text-slate-500 font-normal text-xs ml-2">POS Terminal</span>
