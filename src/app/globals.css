@@ -2,25 +2,23 @@
 
 @theme inline {
   --font-sans: var(--font-inter, 'Inter', system-ui, sans-serif);
-  --color-brand-cyan: #00d4ff;
-  --color-brand-blue: #0f3460;
-  --color-brand-green: #00ff87;
-  --color-surface-0: #040817;
-  --color-surface-1: #080f2e;
-  --color-surface-2: #0f1a3e;
-  --color-surface-3: #1a2550;
+  --color-brand-green: #10B981;
+  --color-surface-0: #090D16;
+  --color-surface-1: #0F172A;
+  --color-surface-2: #1E293B;
+  --color-surface-3: #334155;
 }
 
 /* ── Scrollbar ─────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #040817; }
-::-webkit-scrollbar-thumb { background: #1a2550; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #00d4ff40; }
+::-webkit-scrollbar-track { background: #090D16; }
+::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #10B98140; }
 
 /* ── Animations ────────────────────────────────────────────────────────────── */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 12px #00d4ff40; }
-  50%       { box-shadow: 0 0 32px #00d4ff90; }
+  0%, 100% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.25); }
+  50%       { box-shadow: 0 0 32px rgba(16, 185, 129, 0.5); }
 }
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -51,27 +49,27 @@
 
 /* ── Glassmorphism ─────────────────────────────────────────────────────────── */
 .glass {
-  background: rgba(15, 26, 62, 0.6);
+  background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.15);
 }
 .glass-dark {
-  background: rgba(4, 8, 23, 0.8);
+  background: rgba(9, 13, 22, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.1);
 }
 
 /* ── Gradient text ─────────────────────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #00d4ff, #a855f7);
+  background: linear-gradient(135deg, #10B981, #34d399);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .gradient-text-green {
-  background: linear-gradient(135deg, #00ff87, #00d4ff);
+  background: linear-gradient(135deg, #10B981, #059669);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -79,70 +77,72 @@
 
 /* ── Shimmer skeleton ──────────────────────────────────────────────────────── */
 .shimmer {
-  background: linear-gradient(90deg, #0f1a3e 25%, #1a2550 50%, #0f1a3e 75%);
+  background: linear-gradient(90deg, #0F172A 25%, #1E293B 50%, #0F172A 75%);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
 
 /* ── Button variants ───────────────────────────────────────────────────────── */
 .btn-primary {
-  background: linear-gradient(135deg, #00d4ff, #0066ff);
-  color: #040817;
+  background: #10B981;
+  color: #090D16;
   font-weight: 700;
   border-radius: 8px;
   padding: 12px 28px;
   transition: all 0.2s ease;
-  box-shadow: 0 0 20px #00d4ff30;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
 }
 .btn-primary:hover {
+  background: #059669;
   transform: translateY(-2px);
-  box-shadow: 0 0 32px #00d4ff60;
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.45);
 }
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  color: #00d4ff;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10B981;
   font-weight: 600;
   border-radius: 8px;
   padding: 12px 28px;
   transition: all 0.2s ease;
 }
 .btn-ghost:hover {
-  background: rgba(0, 212, 255, 0.08);
-  border-color: #00d4ff;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10B981;
 }
 
 /* ── Card ──────────────────────────────────────────────────────────────────── */
 .card {
-  background: #080f2e;
-  border: 1px solid rgba(0, 212, 255, 0.1);
+  background: #0F172A;
+  border: 1px solid #1E293B;
   border-radius: 12px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .card:hover {
-  border-color: rgba(0, 212, 255, 0.25);
-  box-shadow: 0 0 24px rgba(0, 212, 255, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.08);
 }
 
 /* ── Input ─────────────────────────────────────────────────────────────────── */
 .input-field {
-  background: #0f1a3e;
-  border: 1px solid rgba(0, 212, 255, 0.15);
+  background: #090D16;
+  border: 1px solid #1E293B;
   border-radius: 8px;
-  color: #e2e8f0;
+  color: #f8fafc;
   padding: 10px 14px;
   width: 100%;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
 .input-field:focus {
-  border-color: #00d4ff;
-  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 .input-field::placeholder { color: #475569; }
 
 /* ── Badge ─────────────────────────────────────────────────────────────────── */
 .badge-paid    { background: #064e3b; color: #34d399; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
 .badge-pending { background: #312e0a; color: #fbbf24; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-.badge-flagged { background: #ff0000; color: #ffffff; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; box-shadow: 0 0 10px rgba(255,0,0,0.6); }
+.badge-flagged { background: #450a0a; color: #f87171; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid rgba(248,113,113,0.3); }
 .badge-reserved{ background: #1e1b4b; color: #a78bfa; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+

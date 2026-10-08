@@ -16,7 +16,7 @@ const NAV_LINKS = [
 
 const METRICS = [
   { label: 'Transactions Verified', value: '2.4M+', icon: CheckCircle2, color: '#10B981' },
-  { label: 'System Uptime', value: '99.98%', icon: Shield, color: '#3b82f6' },
+  { label: 'System Uptime', value: '99.98%', icon: Shield, color: '#10B981' },
   { label: 'Fraud Blocked', value: '18,429', icon: AlertTriangle, color: '#f87171' },
   { label: 'Sync Speed', value: '1.2s', icon: Zap, color: '#10B981' },
 ];
@@ -447,7 +447,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="bg-[#0F172A]/90 hover:border-[#10B981]/40 transition-all border border-slate-800 rounded-3xl p-8 md:p-12 md:flex items-center gap-10 shadow-2xl">
             <div className="flex-1 space-y-4">
-              <div className="flex items-center gap-2 text-[#a855f7] text-xs font-bold uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-[#10B981] text-xs font-bold uppercase tracking-wider">
                 <Brain className="w-4 h-4" /> AI Audit Engine
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-white">

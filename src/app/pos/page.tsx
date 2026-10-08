@@ -300,11 +300,11 @@ export default function POSPage() {
             <ArrowLeft size={16} />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#00D4FF] to-[#0066FF] flex items-center justify-center">
-              <Shield size={13} className="text-[#040817]" />
+            <div className="w-7 h-7 rounded-lg bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center">
+              <Shield size={13} className="text-[#10B981]" />
             </div>
             <span className="font-black tracking-widest text-white text-base">
-              TRA<span className="text-[#00D4FF]">-SYNC</span>
+              TRA<span className="text-[#10B981]">-SYNC</span>
               <span className="text-slate-500 font-normal text-xs ml-2">POS Terminal</span>
             </span>
           </div>
@@ -312,22 +312,22 @@ export default function POSPage() {
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
-            <Wifi size={13} className="text-[#00D084]" />
+            <Wifi size={13} className="text-[#10B981]" />
             <span className="text-slate-400 text-xs hidden sm:inline">Live</span>
           </div>
-          <div className="w-2 h-2 rounded-full bg-[#00D084] animate-blink" />
+          <div className="w-2 h-2 rounded-full bg-[#10B981] animate-blink" />
           <span className="text-slate-400 text-xs hidden sm:inline">Protected</span>
         </div>
       </nav>
 
       {/* Body */}
-      <div className="flex-1 flex flex-col items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top,#111E33_0%,#0A0F1D_70%)]">
+      <div className="flex-1 flex flex-col items-center justify-center p-6 bg-[#090D16]">
         
         <div className="w-full max-w-md animate-slide-up">
-          <div className="bg-[#0D1526] border border-[#1E293B] rounded-3xl p-6 shadow-xl mb-6">
+          <div className="bg-[#0F172A] border border-[#1E293B] rounded-3xl p-6 shadow-xl mb-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-[#152236] flex items-center justify-center">
-                <Keyboard size={20} className="text-[#00D4FF]" />
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center">
+                <Keyboard size={20} className="text-[#10B981]" />
               </div>
               <div>
                 <h2 className="text-white font-bold">Charge Amount</h2>
@@ -358,7 +358,7 @@ export default function POSPage() {
                 value={customDesc}
                 onChange={(e) => setCustomDesc(e.target.value)}
                 placeholder="e.g. Service fee, Deposit..."
-                className="w-full bg-[#0A1628] border border-[#1E293B] rounded-xl px-4 py-3.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-[#00D4FF40] transition-all"
+                className="w-full bg-[#090D16] border border-[#1E293B] rounded-xl px-4 py-3.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-[#10B981]/40 transition-all"
               />
             </div>
             
@@ -368,7 +368,7 @@ export default function POSPage() {
                 <button
                   key={amt}
                   onClick={() => setCustomAmount(amt.toLocaleString())}
-                  className="py-2.5 rounded-xl bg-[#0A1628] border border-[#1E293B] text-slate-300 text-sm font-semibold hover:border-[#00D4FF40] hover:text-[#00D4FF] hover:bg-[#00D4FF10] transition-all"
+                  className="py-2.5 rounded-xl bg-[#090D16] border border-[#1E293B] text-slate-300 text-sm font-semibold hover:border-[#10B981]/40 hover:text-[#10B981] hover:bg-[#10B981]/10 transition-all"
                 >
                   {fmt(amt)}
                 </button>
@@ -408,7 +408,7 @@ export default function POSPage() {
         <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center px-4 py-6 overflow-y-auto">
           {!van && order && (
             <div className="glass rounded-3xl px-12 py-10 text-center animate-slide-up">
-              <div className="w-14 h-14 border-4 border-[#00D4FF] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <div className="w-14 h-14 border-4 border-[#10B981] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
               <p className="text-white font-bold">Generating Virtual Account…</p>
               <p className="text-slate-500 text-sm mt-1">Contacting bank provider</p>
             </div>
@@ -416,16 +416,16 @@ export default function POSPage() {
 
           {van && order && (
             <div className="w-full max-w-sm animate-slide-up">
-              <div className="bg-[#0D1526] border border-[#1E293B] rounded-3xl overflow-hidden shadow-[0_0_60px_#00D08418]">
+              <div className="bg-[#0F172A] border border-[#1E293B] rounded-3xl overflow-hidden shadow-[0_0_60px_rgba(16,185,129,0.15)]">
                 {/* Modal Header */}
-                <div className="bg-gradient-to-r from-[#071A14] to-[#0D1526] px-6 py-5 flex items-center justify-between border-b border-[#1E293B]">
+                <div className="bg-[#062c1d] px-6 py-5 flex items-center justify-between border-b border-[#1E293B]">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#00D084] flex items-center justify-center shadow-[0_0_16px_#00D08460]">
-                      <Zap size={18} className="text-[#040817]" />
+                    <div className="w-9 h-9 rounded-xl bg-[#10B981] flex items-center justify-center shadow-[0_0_16px_rgba(16,185,129,0.4)]">
+                      <Zap size={18} className="text-[#090D16]" />
                     </div>
                     <div>
                       <div className="text-white font-bold text-sm">Bank Transfer Details</div>
-                      <div className="text-slate-500 text-xs">Ref: {order.ref}</div>
+                      <div className="text-slate-400 text-xs">Ref: {order.ref}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5 bg-[#312e0a] border border-[#fbbf2430] rounded-full px-2.5 py-1">
@@ -438,14 +438,14 @@ export default function POSPage() {
 
                 <div className="p-5 space-y-4">
                   {/* Amount */}
-                  <div className="text-center bg-[#071A14] border border-[#00D08430] rounded-2xl py-4">
-                    <p className="text-slate-500 text-[10px] uppercase tracking-widest mb-1">Exact Amount to Transfer</p>
-                    <div className="text-4xl font-black text-[#00D084]">{fmt(van.amount)}</div>
-                    <p className="text-slate-600 text-[10px] mt-1">Transfer exactly this amount &mdash; no more, no less</p>
+                  <div className="text-center bg-[#062c1d]/60 border border-[#10B981]/30 rounded-2xl py-4">
+                    <p className="text-slate-400 text-[10px] uppercase tracking-widest mb-1">Exact Amount to Transfer</p>
+                    <div className="text-4xl font-black text-[#10B981]">{fmt(van.amount)}</div>
+                    <p className="text-slate-400 text-[10px] mt-1">Transfer exactly this amount &mdash; no more, no less</p>
                   </div>
 
-                  {/* Bank Details (Huge and Centered) */}
-                  <div className="bg-[#0A1628] border border-[#1E293B] rounded-2xl py-6 px-4 text-center">
+                  {/* Bank Details */}
+                  <div className="bg-[#090D16] border border-[#1E293B] rounded-2xl py-6 px-4 text-center">
                     <div className="text-slate-500 text-[10px] uppercase tracking-wider mb-2">Account Number</div>
                     <div className="text-4xl font-black font-mono tracking-widest text-white mb-2">
                       {van.account_number}
@@ -461,7 +461,7 @@ export default function POSPage() {
                       className={`mx-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                         copied
                           ? 'bg-[#064e3b] border border-[#34d39940] text-[#34d399]'
-                          : 'bg-[#152236] border border-[#1E293B] text-[#00D4FF] hover:bg-[#00D4FF15] hover:border-[#00D4FF40]'
+                          : 'bg-[#0F172A] border border-[#1E293B] text-[#10B981] hover:bg-[#10B981]/15 hover:border-[#10B981]/40'
                       }`}
                     >
                       {copied ? <CheckCheck size={14} /> : <Copy size={14} />}
