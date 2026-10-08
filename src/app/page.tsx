@@ -1,10 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import {
   Shield, Zap, Lock, CheckCircle2, AlertTriangle, MapPin,
   ArrowRight, BarChart3, Brain, Receipt, QrCode,
-  Play, Radio, Check, MessageSquare, Calculator, Landmark
+  Play, Radio, Check, MessageSquare, Calculator, Landmark,
+  Menu, X
 } from 'lucide-react';
 
 const NAV_LINKS = [
@@ -16,12 +18,23 @@ const NAV_LINKS = [
 
 export default function HomePage() {
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-white font-sans overflow-x-hidden selection:bg-[#10B981] selection:text-[#090D16]">
+    <div className="min-h-screen bg-[#090D16] text-white font-sans overflow-x-hidden selection:bg-[#10B981] selection:text-[#090D16] scroll-smooth">
       {/* ── NAVBAR ────────────────────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#090D16]/90 backdrop-blur-md border-b border-slate-800/80 transition-all">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#090D16]/95 backdrop-blur-md border-b border-slate-800/80 transition-all">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          
           {/* Logo */}
           <div 
             onClick={() => router.push('/')}
@@ -35,21 +48,22 @@ export default function HomePage() {
             </span>
           </div>
 
-          {/* Navigation Links */}
+          {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-slate-300 hover:text-[#10B981] text-sm font-medium transition-colors"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-slate-300 hover:text-[#10B981] text-sm font-medium transition-colors cursor-pointer"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* Auth Action Buttons */}
-          <div className="flex items-center gap-3">
+          {/* Desktop Auth Action Buttons */}
+          <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => router.push('/auth')}
               className="text-slate-300 hover:text-white text-sm font-medium px-4 py-2 transition-colors"
@@ -65,7 +79,58 @@ export default function HomePage() {
               Create Store Account
             </button>
           </div>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-slate-300 hover:text-white bg-slate-900 border border-slate-800 rounded-lg transition-colors focus:outline-none"
+            aria-label="Toggle Mobile Menu"
+            id="mobile-hamburger-btn"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6 text-[#10B981]" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Dropdown Menu Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#090D16]/98 border-b border-slate-800 px-6 pt-4 pb-8 space-y-5 animate-in slide-in-from-top-4 duration-200">
+            <div className="flex flex-col space-y-3 border-b border-slate-800/80 pb-4">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-slate-300 hover:text-[#10B981] text-base font-medium py-1 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="flex flex-col space-y-3 pt-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  router.push('/auth');
+                }}
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3 rounded-lg border border-slate-700/80 transition-colors text-center"
+                id="mobile-nav-login"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  router.push('/auth');
+                }}
+                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-lg transition-all shadow-md shadow-[#10B981]/20 text-center"
+                id="mobile-nav-create-account"
+              >
+                Create Store Account
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* ── HERO SECTION ─────────────────────────────────────────────────── */}
@@ -410,11 +475,10 @@ export default function HomePage() {
       </section>
 
       {/* ── READY TO PROTECT STORE REVENUE CTA CARD ─────────────────────── */}
-      <section className="py-12 pb-24 px-6">
+      <section className="py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl overflow-hidden grid md:grid-cols-12 items-center">
             
-            {/* Left Content (8 Cols) */}
             <div className="md:col-span-8 p-8 md:p-10 space-y-3">
               <div className="text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase">
                 NO HARDWARE LOCK-IN • SETUP IN 5 MINS
@@ -427,7 +491,6 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Right Buttons Container (4 Cols) */}
             <div className="md:col-span-4 bg-[#1E293B]/60 p-8 md:p-10 flex flex-col sm:flex-row md:flex-col gap-3 justify-center items-stretch md:items-start h-full border-t md:border-t-0 md:border-l border-slate-800/80">
               <button
                 onClick={() => router.push('/auth')}
