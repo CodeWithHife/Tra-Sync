@@ -14,13 +14,6 @@ const NAV_LINKS = [
   { label: 'Audit Engine', href: '#audit' },
 ];
 
-const METRICS = [
-  { label: 'Transactions Verified', value: '2.4M+', icon: CheckCircle2, color: '#10B981' },
-  { label: 'Fraud Blocked', value: '18,429', icon: AlertTriangle, color: '#f87171' },
-  { label: 'Active Merchants', value: '4,700+', icon: Shield, color: '#3b82f6' },
-  { label: 'Sync Speed', value: '1.2s', icon: Zap, color: '#10B981' },
-];
-
 export default function HomePage() {
   const router = useRouter();
 
@@ -390,26 +383,74 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── METRICS STRIP ───────────────────────────────────────────────── */}
-      <section className="py-16 px-6 bg-slate-950/60 border-y border-slate-800/80">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {METRICS.map((m) => {
-              const Icon = m.icon;
-              return (
-                <div key={m.label} className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center space-y-2">
-                  <Icon className="w-6 h-6 mx-auto mb-1" style={{ color: m.color }} />
-                  <div className="text-3xl font-black" style={{ color: m.color }}>{m.value}</div>
-                  <div className="text-slate-400 text-xs font-medium">{m.label}</div>
-                </div>
-              );
-            })}
+      {/* ── PLATFORM METRICS STRIP ───────────────────────────────────────── */}
+      <section className="py-12 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-3xl lg:text-4xl font-black text-[#10B981] font-sans">₦0</div>
+                <div className="text-slate-400 text-xs font-medium mt-1">Charge on Failed Tries</div>
+              </div>
+              <div>
+                <div className="text-3xl lg:text-4xl font-black text-white font-sans">1.2s</div>
+                <div className="text-slate-400 text-xs font-medium mt-1">Average Verification</div>
+              </div>
+              <div>
+                <div className="text-3xl lg:text-4xl font-black text-white font-sans">99.98%</div>
+                <div className="text-slate-400 text-xs font-medium mt-1">Gateway Uptime</div>
+              </div>
+              <div>
+                <div className="text-3xl lg:text-4xl font-black text-[#10B981] font-sans">14,800+</div>
+                <div className="text-slate-400 text-xs font-medium mt-1">Nigerian Retail Tills</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── READY TO PROTECT STORE REVENUE CTA CARD ─────────────────────── */}
+      <section className="py-12 pb-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl overflow-hidden grid md:grid-cols-12 items-center">
+            
+            {/* Left Content (8 Cols) */}
+            <div className="md:col-span-8 p-8 md:p-10 space-y-3">
+              <div className="text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase">
+                NO HARDWARE LOCK-IN • SETUP IN 5 MINS
+              </div>
+              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                Ready to protect your store revenue?
+              </h2>
+              <p className="text-slate-400 text-sm md:text-base font-normal leading-relaxed max-w-xl">
+                Sign up today and run test transfers on your existing phone, tablet, or POS terminal without signing long bank contracts.
+              </p>
+            </div>
+
+            {/* Right Buttons Container (4 Cols) */}
+            <div className="md:col-span-4 bg-[#1E293B]/60 p-8 md:p-10 flex flex-col sm:flex-row md:flex-col gap-3 justify-center items-stretch md:items-start h-full border-t md:border-t-0 md:border-l border-slate-800/80">
+              <button
+                onClick={() => router.push('/auth')}
+                className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm px-6 py-3.5 rounded-lg transition-all shadow-md shadow-[#10B981]/20 hover:shadow-[#10B981]/40 text-center w-full"
+                id="cta-get-started"
+              >
+                Get Started Now
+              </button>
+              <button
+                onClick={() => router.push('/onboard')}
+                className="bg-[#1E293B] hover:bg-[#334155] text-white font-medium text-sm px-6 py-3.5 rounded-lg border border-slate-700/60 transition-colors text-center w-full"
+                id="cta-setup-guide"
+              >
+                Terminal Setup Guide
+              </button>
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* ── NIPOST LOCATION ANCHOR ───────────────────────────────────────── */}
-      <section className="py-20 px-6" id="location">
+      <section className="py-20 px-6 border-t border-slate-800/80" id="location">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-slate-800 rounded-3xl p-8 md:p-10 md:flex items-center gap-10">
             <div className="w-20 h-20 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-6 md:mb-0 shrink-0 shadow-lg shadow-[#10B981]/10">
@@ -486,34 +527,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── BOTTOM CTA ──────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 text-center">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Ready to Secure Your Store Operations?
-          </h2>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            Join hundreds of verified merchants eliminating payment fraud and inventory losses today.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <button
-              onClick={() => router.push('/auth')}
-              className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-lg px-9 py-4 rounded-xl transition-all shadow-xl shadow-[#10B981]/30 hover:shadow-[#10B981]/50 hover:-translate-y-0.5"
-              id="final-cta-start"
-            >
-              Get Started Now
-            </button>
-            <button
-              onClick={() => router.push('/onboard')}
-              className="bg-slate-800 hover:bg-slate-700 text-white font-semibold text-lg px-8 py-4 rounded-xl border border-slate-700 transition-all hover:-translate-y-0.5"
-              id="final-cta-onboard"
-            >
-              Configure Store Terminal
-            </button>
           </div>
         </div>
       </section>
