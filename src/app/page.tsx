@@ -48,6 +48,13 @@ export default function HomePage() {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector(link.href);
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
                 className="text-slate-300 hover:text-[#10B981] text-sm font-medium transition-colors"
               >
                 {link.label}
