@@ -430,16 +430,16 @@ export default function HomePage() {
             <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-[#1E293B] border border-slate-700/60 text-slate-300 flex items-center justify-center mb-6">
-                  <Landmark className="w-5 h-5" />
+                  <Landmark className="w-5 h-5 text-[#10B981]" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Supported by Major Nigerian Banks</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Direct Bank Settlement</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">
-                  Direct rails with GTBank, Zenith Bank, Providus Bank, Access Bank, and FirstBank ensure fast routing, low failure rates, and reliable notification speeds.
+                  Instant API webhooks connected directly across all commercial Nigerian banks guarantee sub-second confirmation and zero checkout delays.
                 </p>
               </div>
 
-              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-slate-300 font-mono text-xs font-bold tracking-wider uppercase">
-                GTBANK • ZENITH • PROVIDUS • ACCESS
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase">
+                ALL NIGERIAN BANKS SUPPORTED
               </div>
             </div>
 
