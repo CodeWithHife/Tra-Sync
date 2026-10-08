@@ -4,57 +4,38 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import {
   Shield, Zap, Lock, CheckCircle2, AlertTriangle, MapPin,
-  ArrowRight, BarChart3, Brain, ChevronRight, Globe,
-  ShoppingCart, CreditCard, Building2, Package, Play, Radio, Check
+  ArrowRight, BarChart3, Brain, Globe, Receipt, QrCode,
+  Play, Radio, Check
 } from 'lucide-react';
 
 const NAV_LINKS = [
   { label: 'Features', href: '#features' },
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'POS Sync', href: '#pos-sync' },
-  { label: 'NIPOST Verification', href: '#location' },
-  { label: 'Pricing', href: '#pricing' },
-];
-
-const CHAIN_STEPS = [
-  { icon: ShoppingCart, label: 'Customer', sub: 'Initiates Transfer', color: '#94a3b8' },
-  { icon: CreditCard,   label: 'Payment',  sub: 'Ref: TS-89241',    color: '#f59e0b' },
-  { icon: Building2,    label: 'Bank',      sub: 'Webhook Hook',    color: '#3b82f6' },
-  { icon: Shield,       label: 'TRA-SYNC',  sub: 'Verifies Funds',  color: '#10B981', highlight: true },
-  { icon: Zap,          label: 'POS',       sub: 'Auto Update',     color: '#a855f7' },
-  { icon: Package,      label: 'Inventory', sub: 'Bag Release',     color: '#10B981' },
+  { label: 'NIPOST Sync', href: '#location' },
+  { label: 'Audit Engine', href: '#audit' },
 ];
 
 const METRICS = [
   { label: 'Transactions Verified', value: '2.4M+', icon: CheckCircle2, color: '#10B981' },
-  { label: 'Fraud Attempts Blocked', value: '18,429', icon: AlertTriangle, color: '#f87171' },
-  { label: 'Merchants Protected',    value: '4,700+', icon: Shield,       color: '#3b82f6' },
-  { label: 'Avg Verification Speed', value: '1.2s',   icon: Zap,          color: '#10B981' },
+  { label: 'Fraud Blocked', value: '18,429', icon: AlertTriangle, color: '#f87171' },
+  { label: 'Active Merchants', value: '4,700+', icon: Shield, color: '#3b82f6' },
+  { label: 'Sync Speed', value: '1.2s', icon: Zap, color: '#10B981' },
 ];
 
 const PROBLEMS = [
-  { text: 'Fake Payment Alerts: Scammers use spoofed SMS & forged bank receipts to walk away with goods.' },
-  { text: 'Inventory Loss: Stock is prematurely released based on unverified trust, corrupting inventory.' },
-  { text: 'Manual Reconciliation: Store managers spend hours matching paper receipts with bank statements.' },
+  'Fake Alerts: Fake SMS and forged bank transfer receipts.',
+  'Stock Loss: Releasing goods before funds actually hit bank.',
+  'Manual Chaos: Hours spent matching paper receipts with statements.',
 ];
 
 const SOLUTIONS = [
-  { text: 'Real-Time Bank Verification: Instant API webhook confirmation before POS terminal unlocks.' },
-  { text: 'Automatic Stock Locking: Inventory remains locked in RESERVED state until funds 100% clear.' },
-  { text: 'NIPOST Address Anchoring: Terminal operations tied directly to verified physical business postcodes.' },
+  'Bank Webhook Sync: Direct API verification before till unlocks.',
+  'Stock Lock: Inventory held in reserve until payment clears.',
+  'NIPOST Proof: Terminal anchored to verified physical address.',
 ];
 
 export default function HomePage() {
   const router = useRouter();
-  const [syncedState, setSyncedState] = useState(true);
-
-  // Subtle live pulse effect for terminal simulation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSyncedState((prev) => !prev);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#090D16] text-white font-sans overflow-x-hidden selection:bg-[#10B981] selection:text-[#090D16]">
@@ -109,17 +90,14 @@ export default function HomePage() {
 
       {/* ── HERO SECTION ─────────────────────────────────────────────────── */}
       <section className="relative pt-32 lg:pt-40 pb-20 px-6 overflow-hidden">
-        {/* Ambient Radial Lighting Glow */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#10B981]/15 via-[#10B981]/5 to-transparent blur-3xl pointer-events-none -z-10" />
-        <div className="absolute top-40 left-0 w-[400px] h-[400px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#3B82F6]/10 via-transparent to-transparent blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
-            {/* Left Column: Headline & CTAs (7 cols) */}
+            {/* Left Column (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
               
-              {/* Eyebrow Badge */}
               <div className="inline-flex items-center gap-2 bg-[#062c1d] border border-[#10B981]/40 rounded-full px-3.5 py-1.5 shadow-sm shadow-[#10B981]/10">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
                 <span className="text-[#10B981] text-xs font-bold tracking-wider uppercase">
@@ -127,37 +105,33 @@ export default function HomePage() {
                 </span>
               </div>
 
-              {/* Main Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.12] tracking-tight">
                 Verify Customer Bank Transfers in Real-Time.{' '}
                 <span className="text-[#10B981]">Release Goods with Confidence.</span>
               </h1>
 
-              {/* Subheadline */}
               <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
                 Never lose money to fake SMS alerts or forged transfer receipts. TRA-SYNC connects
                 your bank directly to your checkout till so items unlock instantly when money arrives.
               </p>
 
-              {/* CTA Action Group */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                 <button
                   onClick={() => router.push('/auth')}
-                  className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-base px-7 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/25 hover:shadow-[#10B981]/40 hover:-translate-y-0.5 active:translate-y-0"
+                  className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-base px-7 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/25 hover:shadow-[#10B981]/40 hover:-translate-y-0.5"
                   id="hero-create-account"
                 >
                   Create Free Store Account <ArrowRight className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => router.push('/pos')}
-                  className="bg-[#1E293B]/80 hover:bg-[#334155] text-white font-semibold text-base px-6 py-3.5 rounded-xl border border-slate-700/60 transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:-translate-y-0.5 active:translate-y-0"
+                  className="bg-[#1E293B]/80 hover:bg-[#334155] text-white font-semibold text-base px-6 py-3.5 rounded-xl border border-slate-700/60 transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:-translate-y-0.5"
                   id="hero-view-demo"
                 >
                   <Play className="w-4 h-4 text-white fill-white" /> View Live Demo
                 </button>
               </div>
 
-              {/* Trust Badges */}
               <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-slate-800/80">
                 <div className="flex items-center gap-2 text-slate-300 text-xs sm:text-sm font-medium">
                   <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
@@ -179,7 +153,6 @@ export default function HomePage() {
             <div className="lg:col-span-5">
               <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl p-6 shadow-2xl backdrop-blur-xl font-mono text-xs space-y-5 relative overflow-hidden shadow-[#10B981]/5">
                 
-                {/* Header Row */}
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-ping" />
@@ -193,7 +166,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Session & Payee Details */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400">Customer Transfer Session</span>
@@ -212,14 +184,12 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Animated Glowing Progress Bar */}
                 <div className="space-y-1">
                   <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
                     <div className="bg-gradient-to-r from-[#10B981] to-[#34D399] h-full rounded-full w-full shadow-[0_0_12px_#10B981] animate-pulse" />
                   </div>
                 </div>
 
-                {/* 3 Status Stat Columns */}
                 <div className="grid grid-cols-3 gap-2 text-center py-2 bg-slate-900/60 rounded-xl border border-slate-800/60">
                   <div className="border-r border-slate-800 pr-1">
                     <div className="text-[10px] text-slate-500 uppercase tracking-wider">STEP 1</div>
@@ -235,7 +205,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Payment Confirmed Banner Box */}
                 <div className="bg-[#064E3B]/50 border border-[#10B981]/60 rounded-xl p-4 flex items-center justify-between shadow-lg shadow-[#10B981]/10">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-lg bg-[#10B981] text-[#064E3B] flex items-center justify-center shrink-0 shadow-md">
@@ -258,7 +227,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Terminal Footer Bar */}
                 <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-[11px]">
                   <span className="text-slate-400 font-mono">RECEIPT #REC-4091 READY</span>
                   <div className="flex items-center gap-1.5 text-[#10B981] font-bold">
@@ -274,85 +242,131 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── VERIFIED PAYMENT CHAIN STEPS ─────────────────────────────────── */}
-      <section className="py-16 px-6 border-t border-slate-800/80 bg-slate-950/40" id="how-it-works">
+      {/* ── HOW IT WORKS IN YOUR SHOP (SIMPLE 3-STEP PROCESS) ──────────────── */}
+      <section className="py-20 px-6 border-t border-slate-800/80 bg-[#0B0F17]" id="how-it-works">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-slate-500 text-xs uppercase tracking-widest font-semibold mb-12">
-            The Verified Payment Chain Architecture
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {CHAIN_STEPS.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.label} className="flex items-center gap-3">
-                  <div className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all ${step.highlight ? 'bg-[#10B981]/10 border border-[#10B981]/40' : 'bg-slate-900/60 border border-slate-800'}`}>
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center"
-                      style={{
-                        background: step.highlight ? '#10B98120' : '#0f172a',
-                        border: `1px solid ${step.color}40`,
-                        boxShadow: step.highlight ? `0 0 20px ${step.color}30` : 'none',
-                      }}
-                    >
-                      <Icon className="w-5 h-5" style={{ color: step.color }} />
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-white">{step.label}</div>
-                      <div className="text-[10px] text-slate-400">{step.sub}</div>
-                    </div>
-                  </div>
-                  {i < CHAIN_STEPS.length - 1 && (
-                    <ChevronRight className="w-4 h-4 text-slate-600 shrink-0" />
-                  )}
-                </div>
-              );
-            })}
+          
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase mb-2">
+                SIMPLE 3-STEP PROCESS
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                How It Works in Your Shop
+              </h2>
+            </div>
+            <p className="text-slate-400 text-sm md:text-base max-w-md font-normal leading-relaxed">
+              Zero complex cashier training. Built directly into everyday checkout operations across retail supermarkets, pharmacies, and wholesale stalls.
+            </p>
           </div>
+
+          {/* 3 Step Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            {/* STAGE 01 */}
+            <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-[#10B981]/15 text-[#10B981] flex items-center justify-center border border-[#10B981]/30">
+                    <Receipt className="w-5 h-5" />
+                  </div>
+                  <span className="text-slate-500 text-xs font-mono font-bold tracking-wider">STAGE 01</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Ring Up Sale</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Cashier scans or selects items on the checkout counter. The system tallies total payable amount in Naira with exact line-item records.
+                </p>
+              </div>
+              
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 flex items-center justify-between font-mono text-xs">
+                <span className="text-slate-400">Cart: 4 FMCG Items</span>
+                <span className="text-white font-bold text-sm">₦18,450.00</span>
+              </div>
+            </div>
+
+            {/* STAGE 02 */}
+            <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-[#10B981]/15 text-[#10B981] flex items-center justify-center border border-[#10B981]/30">
+                    <QrCode className="w-5 h-5" />
+                  </div>
+                  <span className="text-slate-500 text-xs font-mono font-bold tracking-wider">STAGE 02</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Customer Transfers</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Customer sends exact amount via any Nigerian bank app using an automated dynamic store account or quick QR code presented at checkout.
+                </p>
+              </div>
+
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 flex items-center justify-between font-mono text-xs">
+                <span className="text-slate-400">NIBSS Instant Transfer</span>
+                <span className="text-[#10B981] font-bold">SCAN / USSD / APP</span>
+              </div>
+            </div>
+
+            {/* STAGE 03 */}
+            <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-[#10B981]/40 transition-all shadow-lg shadow-[#10B981]/5">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-[#10B981]/15 text-[#10B981] flex items-center justify-center border border-[#10B981]/30">
+                    <CheckCircle2 className="w-5 h-5" />
+                  </div>
+                  <span className="text-[#10B981] text-xs font-mono font-bold tracking-wider">STAGE 03</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Instant Confirmation</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Screen flashes green immediately the fund settles. Inventory deducts automatically and the thermal receipt issues without waiting for personal phone alerts.
+                </p>
+              </div>
+
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-center font-mono text-xs">
+                <span className="text-[#10B981] font-bold tracking-wider">✓ SETTLED • PRINT RECEIPT</span>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
-      {/* ── PROBLEM VS SOLUTION COMPARISON ───────────────────────────────── */}
-      <section className="py-20 px-6" id="features">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
-              Unverified Payments & Manual Chaos Are <span className="text-[#10B981]">Killing Margins</span>
+      {/* ── PROBLEM VS SOLUTION (STRAIGHTFORWARD) ───────────────────────── */}
+      <section className="py-20 px-6 border-t border-slate-800/80" id="features">
+        <div className="max-w-5xl mx-auto space-y-12">
+          <div className="text-center space-y-3">
+            <h2 className="text-3xl sm:text-4xl font-black text-white">
+              Why Shops Use <span className="text-[#10B981]">TRA-SYNC</span>
             </h2>
-            <p className="text-slate-400 text-base max-w-2xl mx-auto">
-              Retail businesses lose millions annually to operational friction, slow banking feedback, and fraudulent transfer proofs.
+            <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+              Eliminate checkout fraud and stop releasing unverified stock.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Left: The Problem */}
-            <div className="bg-slate-900/80 border border-red-500/20 rounded-2xl p-7 space-y-6">
-              <h3 className="text-red-400 font-bold text-xl flex items-center gap-2 border-b border-slate-800 pb-4">
-                <AlertTriangle className="w-5 h-5" /> Unverified Manual Process
+            <div className="bg-slate-900/80 border border-red-500/20 rounded-2xl p-7 space-y-5">
+              <h3 className="text-red-400 font-bold text-lg flex items-center gap-2 border-b border-slate-800 pb-3">
+                <AlertTriangle className="w-5 h-5" /> Without TRA-SYNC
               </h3>
-              <div className="space-y-4">
-                {PROBLEMS.map((p, idx) => (
+              <div className="space-y-3">
+                {PROBLEMS.map((prob, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center shrink-0 mt-0.5">
-                      ✕
-                    </div>
-                    <p className="text-slate-300 text-sm leading-relaxed">{p.text}</p>
+                    <span className="text-red-400 font-bold text-sm">✕</span>
+                    <p className="text-slate-300 text-sm leading-relaxed">{prob}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right: The TRA-SYNC Solution */}
-            <div className="bg-[#062c1d]/40 border border-[#10B981]/40 rounded-2xl p-7 space-y-6 shadow-xl shadow-[#10B981]/5">
-              <h3 className="text-[#10B981] font-bold text-xl flex items-center gap-2 border-b border-slate-800 pb-4">
-                <CheckCircle2 className="w-5 h-5" /> The TRA-SYNC Solution
+            <div className="bg-[#062c1d]/40 border border-[#10B981]/40 rounded-2xl p-7 space-y-5">
+              <h3 className="text-[#10B981] font-bold text-lg flex items-center gap-2 border-b border-slate-800 pb-3">
+                <CheckCircle2 className="w-5 h-5" /> With TRA-SYNC
               </h3>
-              <div className="space-y-4">
-                {SOLUTIONS.map((s, idx) => (
+              <div className="space-y-3">
+                {SOLUTIONS.map((sol, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#10B981]/20 text-[#10B981] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
-                      ✓
-                    </div>
-                    <p className="text-slate-200 text-sm leading-relaxed">{s.text}</p>
+                    <span className="text-[#10B981] font-bold text-sm">✓</span>
+                    <p className="text-slate-200 text-sm leading-relaxed">{sol}</p>
                   </div>
                 ))}
               </div>
@@ -361,7 +375,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── LIVE PLATFORM METRICS ────────────────────────────────────────── */}
+      {/* ── METRICS STRIP ───────────────────────────────────────────────── */}
       <section className="py-16 px-6 bg-slate-950/60 border-y border-slate-800/80">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -369,7 +383,7 @@ export default function HomePage() {
               const Icon = m.icon;
               return (
                 <div key={m.label} className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center space-y-2">
-                  <Icon className="w-6 h-6 mx-auto mb-2" style={{ color: m.color }} />
+                  <Icon className="w-6 h-6 mx-auto mb-1" style={{ color: m.color }} />
                   <div className="text-3xl font-black" style={{ color: m.color }}>{m.value}</div>
                   <div className="text-slate-400 text-xs font-medium">{m.label}</div>
                 </div>
@@ -379,7 +393,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── NIPOST LOCATION ANCHOR SECTION ───────────────────────────────── */}
+      {/* ── NIPOST LOCATION ANCHOR ───────────────────────────────────────── */}
       <section className="py-20 px-6" id="location">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-slate-800 rounded-3xl p-8 md:p-10 md:flex items-center gap-10">
@@ -391,21 +405,21 @@ export default function HomePage() {
                 Official NIPOST Integration
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-white">
-                Grounded in Physical Reality with NIPOST Postcodes
+                Grounded in Physical Reality
               </h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                TRA-SYNC validates that terminal operations occur within authorized geographical boundaries using official Nigerian Postal Service (NIPOST) digital postcodes.
+                Validates terminal operations within physical boundaries using official NIPOST digital postcodes.
               </p>
               <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
                 <div>
-                  <span className="text-slate-500">NIPOST Postcode: </span>
+                  <span className="text-slate-500">Postcode: </span>
                   <span className="text-[#10B981] font-bold">LA-100001-0842</span>
                   <div className="text-slate-400 text-[11px] mt-0.5">
-                    Resolved: Block 4, Commercial Ave, Ikeja Industrial Zone, Lagos State.
+                    Location: Commercial Ave, Ikeja Industrial Zone, Lagos State.
                   </div>
                 </div>
                 <span className="bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 text-[10px] font-bold px-2.5 py-1 rounded-lg">
-                  VERIFIED LOCATION ACTIVE
+                  LOCATION VERIFIED
                 </span>
               </div>
             </div>
@@ -413,8 +427,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── AI AUDIT ENGINE SECTION ──────────────────────────────────────── */}
-      <section className="py-20 px-6 border-t border-slate-800/80">
+      {/* ── AI AUDIT ENGINE ─────────────────────────────────────────────── */}
+      <section className="py-20 px-6 border-t border-slate-800/80" id="audit">
         <div className="max-w-4xl mx-auto">
           <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-8 md:p-10 md:flex items-center gap-10">
             <div className="flex-1 space-y-4">
@@ -422,10 +436,10 @@ export default function HomePage() {
                 <Brain className="w-4 h-4" /> AI Audit Engine
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-white">
-                Automated Anomaly & Discrepancy Detection
+                Automated Discrepancy Detection
               </h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Our machine learning audit pipeline monitors transaction flows continuously to flag suspicious payment patterns and inventory mismatches before EOD reporting.
+                Monitors transaction flows continuously to flag suspicious patterns and inventory mismatches.
               </p>
               <button
                 onClick={() => router.push('/admin')}
@@ -436,22 +450,21 @@ export default function HomePage() {
               </button>
             </div>
             
-            {/* Right Mini Card */}
-            <div className="bg-slate-950 border border-slate-800 p-6 rounded-2xl min-w-[240px] mt-6 md:mt-0 space-y-4">
-              <div className="text-slate-500 text-[10px] font-mono uppercase tracking-wider">
-                Real-Time Risk Pipeline
+            <div className="bg-slate-950 border border-slate-800 p-6 rounded-2xl min-w-[240px] mt-6 md:mt-0 space-y-4 font-mono text-xs">
+              <div className="text-slate-500 text-[10px] uppercase tracking-wider">
+                Risk Pipeline Status
               </div>
-              <div className="space-y-3 font-mono text-xs">
+              <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Transactions Analyzed</span>
-                  <span className="text-white font-bold">14 Batches</span>
+                  <span className="text-slate-400">Batches Analyzed</span>
+                  <span className="text-white font-bold">14</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400">Discrepancies</span>
-                  <span className="text-red-400 font-bold">1 Unmatched</span>
+                  <span className="text-red-400 font-bold">1</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">System Risk Score</span>
+                  <span className="text-slate-400">Risk Score</span>
                   <span className="bg-[#10B981]/20 text-[#10B981] font-bold px-2 py-0.5 rounded text-[10px]">
                     LOW (0.02%)
                   </span>
@@ -462,8 +475,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA SECTION ────────────────────────────────────────────── */}
-      <section className="py-24 px-6 text-center relative">
+      {/* ── BOTTOM CTA ──────────────────────────────────────────────────── */}
+      <section className="py-24 px-6 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
             Ready to Secure Your Store Operations?
@@ -490,10 +503,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────────────────────────────── */}
+      {/* ── FOOTER ──────────────────────────────────────────────────────── */}
       <footer className="border-t border-slate-800/80 py-10 px-6 text-center text-slate-500 text-xs space-y-2 bg-slate-950">
         <div>© 2026 TRA-SYNC · Anti-Fraud Real-Time Payment & Inventory Synchronization</div>
-        <div className="text-slate-600">Built for Nigerian Retail Merchants & Enterprise Tills · CBN Compliant Webhook Architecture</div>
+        <div className="text-slate-600">Built for Nigerian Retail Merchants & Enterprise Tills</div>
       </footer>
     </div>
   );
