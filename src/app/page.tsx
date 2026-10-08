@@ -1,11 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import {
   Shield, Zap, Lock, CheckCircle2, AlertTriangle, MapPin,
-  ArrowRight, BarChart3, Brain, Globe, Receipt, QrCode,
-  Play, Radio, Check
+  ArrowRight, BarChart3, Brain, Receipt, QrCode,
+  Play, Radio, Check, MessageSquare, Calculator, Landmark
 } from 'lucide-react';
 
 const NAV_LINKS = [
@@ -20,18 +19,6 @@ const METRICS = [
   { label: 'Fraud Blocked', value: '18,429', icon: AlertTriangle, color: '#f87171' },
   { label: 'Active Merchants', value: '4,700+', icon: Shield, color: '#3b82f6' },
   { label: 'Sync Speed', value: '1.2s', icon: Zap, color: '#10B981' },
-];
-
-const PROBLEMS = [
-  'Fake Alerts: Fake SMS and forged bank transfer receipts.',
-  'Stock Loss: Releasing goods before funds actually hit bank.',
-  'Manual Chaos: Hours spent matching paper receipts with statements.',
-];
-
-const SOLUTIONS = [
-  'Bank Webhook Sync: Direct API verification before till unlocks.',
-  'Stock Lock: Inventory held in reserve until payment clears.',
-  'NIPOST Proof: Terminal anchored to verified physical address.',
 ];
 
 export default function HomePage() {
@@ -246,7 +233,6 @@ export default function HomePage() {
       <section className="py-20 px-6 border-t border-slate-800/80 bg-[#0B0F17]" id="how-it-works">
         <div className="max-w-6xl mx-auto">
           
-          {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <div className="text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase mb-2">
@@ -261,7 +247,6 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* 3 Step Cards Grid */}
           <div className="grid md:grid-cols-3 gap-6">
             
             {/* STAGE 01 */}
@@ -331,47 +316,77 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PROBLEM VS SOLUTION (STRAIGHTFORWARD) ───────────────────────── */}
-      <section className="py-20 px-6 border-t border-slate-800/80" id="features">
-        <div className="max-w-5xl mx-auto space-y-12">
+      {/* ── WHY SHOP OWNERS LOVE TRA-SYNC ─────────────────────────────── */}
+      <section className="py-20 px-6 border-t border-slate-800/80 bg-[#090D16]" id="features">
+        <div className="max-w-6xl mx-auto space-y-12">
+          
           <div className="text-center space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-black text-white">
-              Why Shops Use <span className="text-[#10B981]">TRA-SYNC</span>
+            <div className="text-[#10B981] font-mono text-xs font-bold tracking-wider uppercase">
+              BUILT FOR REAL NIGERIAN COMMERCE
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+              Why Shop Owners Love TRA-SYNC
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-              Eliminate checkout fraud and stop releasing unverified stock.
+            <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
+              Engineered to eradicate cashiers&apos; biggest daily headaches: fake bank screenshots, delayed personal SMS alerts, and midnight ledger mismatches.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-slate-900/80 border border-red-500/20 rounded-2xl p-7 space-y-5">
-              <h3 className="text-red-400 font-bold text-lg flex items-center gap-2 border-b border-slate-800 pb-3">
-                <AlertTriangle className="w-5 h-5" /> Without TRA-SYNC
-              </h3>
-              <div className="space-y-3">
-                {PROBLEMS.map((prob, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <span className="text-red-400 font-bold text-sm">✕</span>
-                    <p className="text-slate-300 text-sm leading-relaxed">{prob}</p>
-                  </div>
-                ))}
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            {/* Card 1 */}
+            <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-[#1E293B] border border-slate-700/60 text-slate-300 flex items-center justify-center mb-6">
+                  <MessageSquare className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">No More Fake SMS Alerts</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Cashiers no longer rely on looking at customer phones or waiting for personal bank notifications. The till registers truth directly from the financial settlement gateway.
+                </p>
+              </div>
+
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-slate-400 font-mono text-xs font-medium">
+                Zero reliance on customer phone screens
               </div>
             </div>
 
-            <div className="bg-[#062c1d]/40 border border-[#10B981]/40 rounded-2xl p-7 space-y-5">
-              <h3 className="text-[#10B981] font-bold text-lg flex items-center gap-2 border-b border-slate-800 pb-3">
-                <CheckCircle2 className="w-5 h-5" /> With TRA-SYNC
-              </h3>
-              <div className="space-y-3">
-                {SOLUTIONS.map((sol, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <span className="text-[#10B981] font-bold text-sm">✓</span>
-                    <p className="text-slate-200 text-sm leading-relaxed">{sol}</p>
-                  </div>
-                ))}
+            {/* Card 2 */}
+            <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-[#1E293B] border border-slate-700/60 text-slate-300 flex items-center justify-center mb-6">
+                  <Calculator className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Zero Manual Ledger Balancing</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  End-of-day accounts reconcile automatically. Eliminate missing payments, uncredited transactions, and hours spent reviewing paper deposit slips after closing hours.
+                </p>
+              </div>
+
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-slate-400 font-mono text-xs font-medium">
+                Automated export to Excel &amp; POS databases
               </div>
             </div>
+
+            {/* Card 3 */}
+            <div className="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-[#1E293B] border border-slate-700/60 text-slate-300 flex items-center justify-center mb-6">
+                  <Landmark className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Supported by Major Nigerian Banks</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Direct rails with GTBank, Zenith Bank, Providus Bank, Access Bank, and FirstBank ensure fast routing, low failure rates, and reliable notification speeds.
+                </p>
+              </div>
+
+              <div className="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-slate-300 font-mono text-xs font-bold tracking-wider uppercase">
+                GTBANK • ZENITH • PROVIDUS • ACCESS
+              </div>
+            </div>
+
           </div>
+
         </div>
       </section>
 
@@ -506,7 +521,7 @@ export default function HomePage() {
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
       <footer className="border-t border-slate-800/80 py-10 px-6 text-center text-slate-500 text-xs space-y-2 bg-slate-950">
         <div>© 2026 TRA-SYNC · Anti-Fraud Real-Time Payment & Inventory Synchronization</div>
-        <div className="text-slate-600">Built for Nigerian Retail Merchants & Enterprise Tills</div>
+        <div className="text-slate-600 font-mono">Built for Nigerian Retail Merchants & Enterprise Tills</div>
       </footer>
     </div>
   );
