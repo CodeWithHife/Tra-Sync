@@ -343,8 +343,9 @@ export default function OnboardPage() {
                   <span className="text-white font-bold">{business.name || 'Your Business'}</span> is now active on TRA-SYNC real-time anti-fraud protocol.
                 </p>
                 {postcodeResult && (
-                  <p className="text-[#10B981] font-mono text-xs pt-1">
-                    📍 {postcodeResult.street}, {postcodeResult.lga}, {postcodeResult.state}
+                  <p className="text-[#10B981] font-mono text-xs pt-1 flex items-center justify-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                    <span>{postcodeResult.street}, {postcodeResult.lga}, {postcodeResult.state}</span>
                   </p>
                 )}
               </div>
