@@ -144,5 +144,5 @@
 /* ── Badge ─────────────────────────────────────────────────────────────────── */
 .badge-paid    { background: #064e3b; color: #34d399; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
 .badge-pending { background: #312e0a; color: #fbbf24; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-.badge-flagged { background: #450a0a; color: #f87171; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.badge-flagged { background: #ff0000; color: #ffffff; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; box-shadow: 0 0 10px rgba(255,0,0,0.6); }
 .badge-reserved{ background: #1e1b4b; color: #a78bfa; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }

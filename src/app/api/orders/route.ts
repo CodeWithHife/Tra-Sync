@@ -12,7 +12,7 @@ import { Order, OrderItem } from '@/types';
 
 // POST /api/orders — create new order and reserve stock
 export async function POST(req: NextRequest) {
-  let body: { items: { product_id: string; quantity: number }[] };
+  let body: { items: { product_id: string; quantity: number }[], total?: number };
   try {
     body = await req.json();
   } catch {
@@ -31,12 +31,13 @@ export async function POST(req: NextRequest) {
       const product = mockProducts.find((p) => p.id === i.product_id);
       return {
         product_id: i.product_id,
-        product_name: product?.name ?? 'Unknown',
+        product_name: product?.name ?? (i.product_id === 'custom' ? 'Custom Amount' : 'Unknown'),
         quantity: i.quantity,
-        unit_price: product?.price ?? 0,
+        unit_price: product?.price ?? (body.total ? body.total / i.quantity : 0),
       };
     });
-    const total = orderItems.reduce((sum, i) => sum + i.unit_price * i.quantity, 0);
+    const calculatedTotal = orderItems.reduce((sum, i) => sum + i.unit_price * i.quantity, 0);
+    const total = body.total ?? calculatedTotal;
     const order: Order = {
       id: `ord-${Date.now()}`,
       ref,
@@ -54,6 +55,11 @@ export async function POST(req: NextRequest) {
   const orderItems: OrderItem[] = [];
   let total = 0;
   for (const item of body.items) {
+    if (item.product_id === 'custom') {
+      orderItems.push({ product_id: 'custom', product_name: 'Custom Amount', quantity: item.quantity, unit_price: body.total ?? 0 });
+      total += body.total ?? 0;
+      continue;
+    }
     const { data: product } = await supabase!.from('products').select('*').eq('id', item.product_id).single();
     if (product) {
       orderItems.push({ product_id: item.product_id, product_name: product.name, quantity: item.quantity, unit_price: product.price });
@@ -65,8 +71,10 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const finalTotal = body.total ?? total;
+
   const { data: order, error } = await supabase!.from('orders').insert({
-    ref, items: orderItems, total, status: 'RESERVED', created_at: new Date().toISOString(),
+    ref, items: orderItems, total: finalTotal, status: 'RESERVED', created_at: new Date().toISOString(),
   }).select().single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

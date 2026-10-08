@@ -222,29 +222,30 @@ export default function OnboardPage() {
                 </div>
               </div>
 
-              <p className="text-slate-400 text-sm mb-5 leading-relaxed">
-                Enter your NIPOST digital postcode to anchor your terminal to a verified address.
-                <span className="text-[#00d4ff]"> Try: LA-100001-0842</span>
-              </p>
-
-              <div className="flex gap-2 mb-4">
-                <input
-                  id="onboard-postcode"
-                  type="text"
-                  className="input-field font-mono tracking-widest flex-1"
-                  placeholder="LA-100001-0842"
-                  value={postcode}
-                  onChange={(e) => { setPostcode(e.target.value.toUpperCase()); setPostcodeError(''); setPostcodeResult(null); }}
-                  onKeyDown={(e) => e.key === 'Enter' && lookupPostcode()}
-                />
-                <button
-                  id="onboard-postcode-verify"
-                  onClick={lookupPostcode}
-                  disabled={postcodeLoading}
-                  className="btn-ghost px-4 shrink-0 flex items-center gap-2 disabled:opacity-60"
-                >
-                  {postcodeLoading ? <Loader2 size={16} className="animate-spin" /> : 'Verify'}
-                </button>
+              <div>
+                <label className="text-slate-400 text-xs uppercase tracking-wider block mb-2">Business Address or NIPOST Digital Postcode</label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    id="onboard-postcode"
+                    type="text"
+                    className="input-field flex-1"
+                    placeholder="e.g., 12 Allen Avenue, Ikeja OR LA-100001-0842"
+                    value={postcode}
+                    onChange={(e) => { setPostcode(e.target.value); setPostcodeError(''); setPostcodeResult(null); }}
+                    onKeyDown={(e) => e.key === 'Enter' && lookupPostcode()}
+                  />
+                  <button
+                    id="onboard-postcode-verify"
+                    onClick={lookupPostcode}
+                    disabled={postcodeLoading}
+                    className="btn-ghost px-4 shrink-0 flex items-center gap-2 disabled:opacity-60"
+                  >
+                    {postcodeLoading ? <Loader2 size={16} className="animate-spin" /> : 'Verify'}
+                  </button>
+                </div>
+                <p className="text-slate-500 text-xs mb-5">
+                  Type your street address to auto-resolve your digital postcode. (Demo shortcut: Enter 'LA-100001-0842' or '12 Allen Avenue')
+                </p>
               </div>
 
               {postcodeError && (
@@ -255,29 +256,28 @@ export default function OnboardPage() {
               )}
 
               {postcodeResult && (
-                <div className="bg-[#0a1f10] border border-[#34d39930] rounded-xl p-5 mb-4 animate-slide-up">
-                  <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle size={16} className="text-[#34d399]" />
-                    <span className="text-[#34d399] font-semibold text-sm">Location Verified</span>
+                <div className="bg-[#0a1f10] border border-[#34d39930] rounded-xl p-5 mb-6 animate-slide-up">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle size={16} className="text-[#34d399]" />
+                      <span className="text-[#34d399] font-bold text-sm">Verified Location Badge</span>
+                    </div>
+                    <span className="bg-[#064e3b] text-[#34d399] px-2 py-1 rounded-full text-[10px] font-bold tracking-wider">
+                      TERMINAL GEOFENCED
+                    </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="space-y-3 text-sm">
                     <div>
-                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-1">Street</span>
-                      <span className="text-white font-medium">{postcodeResult.street}</span>
+                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-0.5">Assigned NIPOST Postcode</span>
+                      <span className="text-[#00d4ff] font-mono font-bold text-lg">{postcodeResult.postcode}</span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-1">LGA</span>
-                      <span className="text-white font-medium">{postcodeResult.lga}</span>
+                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-0.5">Full Address</span>
+                      <span className="text-white font-medium">{postcodeResult.street}, {postcodeResult.lga}, {postcodeResult.state} State</span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-1">State</span>
-                      <span className="text-white font-medium">{postcodeResult.state}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-1">Coordinates</span>
-                      <span className="text-[#00d4ff] font-mono text-xs">
-                        {postcodeResult.lat.toFixed(4)}°N {postcodeResult.lng.toFixed(4)}°E
-                      </span>
+                      <span className="text-slate-500 block text-xs uppercase tracking-wider mb-0.5">Geofence Coordinates</span>
+                      <span className="text-white font-medium">{postcodeResult.lat.toFixed(4)}° N, {postcodeResult.lng.toFixed(4)}° E</span>
                     </div>
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function OnboardPage() {
                 disabled={!canAdvance()}
                 className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Confirm Location <ChevronRight size={16} />
+                Confirm & Lock Location <ChevronRight size={16} />
               </button>
             </div>
           )}

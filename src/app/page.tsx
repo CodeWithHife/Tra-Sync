@@ -16,8 +16,8 @@ const NAV_LINKS = [
 
 const METRICS = [
   { label: 'Transactions Verified', value: '2.4M+', icon: CheckCircle2, color: '#10B981' },
+  { label: 'System Uptime', value: '99.98%', icon: Shield, color: '#3b82f6' },
   { label: 'Fraud Blocked', value: '18,429', icon: AlertTriangle, color: '#f87171' },
-  { label: 'Active Merchants', value: '4,700+', icon: Shield, color: '#3b82f6' },
   { label: 'Sync Speed', value: '1.2s', icon: Zap, color: '#10B981' },
 ];
 
@@ -104,7 +104,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                 <button
-                  onClick={() => router.push('/auth')}
+                  onClick={() => router.push('/dashboard')}
                   className="bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-base px-7 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/25 hover:shadow-[#10B981]/40 hover:-translate-y-0.5"
                   id="hero-create-account"
                 >
@@ -184,7 +184,7 @@ export default function HomePage() {
                   </div>
                   <div className="border-r border-slate-800 px-1">
                     <div className="text-[10px] text-slate-500 uppercase tracking-wider">SPEED</div>
-                    <div className="text-[#10B981] font-bold text-[11px]">1.2s Sync</div>
+                    <div className="text-[#10B981] font-bold text-[11px] font-mono transform-gpu">1.2s Sync</div>
                   </div>
                   <div className="pl-1">
                     <div className="text-[10px] text-slate-500 uppercase tracking-wider">STATUS</div>
@@ -399,7 +399,7 @@ export default function HomePage() {
               return (
                 <div key={m.label} className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center space-y-2">
                   <Icon className="w-6 h-6 mx-auto mb-1" style={{ color: m.color }} />
-                  <div className="text-3xl font-black" style={{ color: m.color }}>{m.value}</div>
+                  <div className="text-3xl font-black font-mono tracking-tight transform-gpu" style={{ color: m.color }}>{m.value}</div>
                   <div className="text-slate-400 text-xs font-medium">{m.label}</div>
                 </div>
               );
@@ -410,9 +410,9 @@ export default function HomePage() {
 
       {/* ── NIPOST LOCATION ANCHOR ───────────────────────────────────────── */}
       <section className="py-20 px-6" id="location">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900 border border-slate-800 rounded-3xl p-8 md:p-10 md:flex items-center gap-10">
-            <div className="w-20 h-20 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-6 md:mb-0 shrink-0 shadow-lg shadow-[#10B981]/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-[#0F172A]/90 hover:border-[#10B981]/40 transition-all border border-slate-800 rounded-3xl p-8 md:p-12 md:flex items-center gap-10 shadow-2xl">
+            <div className="w-20 h-20 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center mb-6 md:mb-0 shrink-0 shadow-lg shadow-[#10B981]/20">
               <MapPin className="w-10 h-10 text-[#10B981]" />
             </div>
             <div className="space-y-4 flex-1">
@@ -444,8 +444,8 @@ export default function HomePage() {
 
       {/* ── AI AUDIT ENGINE ─────────────────────────────────────────────── */}
       <section className="py-20 px-6 border-t border-slate-800/80" id="audit">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-8 md:p-10 md:flex items-center gap-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-[#0F172A]/90 hover:border-[#10B981]/40 transition-all border border-slate-800 rounded-3xl p-8 md:p-12 md:flex items-center gap-10 shadow-2xl">
             <div className="flex-1 space-y-4">
               <div className="flex items-center gap-2 text-[#a855f7] text-xs font-bold uppercase tracking-wider">
                 <Brain className="w-4 h-4" /> AI Audit Engine

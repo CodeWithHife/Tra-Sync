@@ -54,17 +54,28 @@ export async function GET(req: NextRequest) {
   }
 
   const normalizedCode = code.trim().toUpperCase();
-  const result = MOCK_POSTCODES[normalizedCode];
+  let result = MOCK_POSTCODES[normalizedCode];
+
+  // Auto-resolve logic for the demo address
+  if (!result && (code.trim().toLowerCase().includes('12 allen avenue') || code.trim().toLowerCase().includes('la-100001-0842'))) {
+    result = {
+      ...MOCK_POSTCODES['LA-100001-0842'],
+      street: '12 Allen Avenue, Ikeja',
+    };
+  }
 
   if (!result) {
     return NextResponse.json(
-      { error: `Postcode not found: ${code}. Try LA-100001-0842` },
+      { error: `Location not found: ${code}. Try LA-100001-0842 or '12 Allen Avenue'` },
       { status: 404 }
     );
   }
 
+  // Inject verified status for the new UI requirements
+  const enrichedResult = { ...result, status: 'VERIFIED' };
+
   // Simulate slight network delay for realism
   await new Promise((resolve) => setTimeout(resolve, 400));
 
-  return NextResponse.json(result);
+  return NextResponse.json(enrichedResult);
 }
