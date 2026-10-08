@@ -306,7 +306,7 @@ export default function AdminPage() {
                     ))}
                   </div>
                 </div>
-                <button className="bg-[#FFFFFF]/10 hover:bg-[#FFFFFF]/20 border border-[#FFFFFF]/20 text-[#FFFFFF] px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors">
+                <button onClick={() => router.push('/admin/add-staff')} className="bg-[#FFFFFF]/10 hover:bg-[#FFFFFF]/20 border border-[#FFFFFF]/20 text-[#FFFFFF] px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-colors">
                   <UserPlus size={16} /> Add Staff
                 </button>
               </div>

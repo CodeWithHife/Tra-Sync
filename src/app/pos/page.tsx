@@ -30,6 +30,7 @@ export default function POSPage() {
   const [customDesc, setCustomDesc] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [simulating, setSimulating] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -128,6 +129,24 @@ export default function POSPage() {
     return () => cleanupPolling();
   }, []);
 
+  useEffect(() => {
+    if (van && posState === 'POLLING') {
+      setCountdown(3);
+    } else {
+      setCountdown(null);
+    }
+  }, [van, posState]);
+
+  useEffect(() => {
+    if (countdown === null) return;
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (countdown === 0 && !simulating && posState === 'POLLING') {
+      simulatePayment();
+    }
+  }, [countdown, simulating, posState]);
+
   // Play success chime when PAID
   useEffect(() => {
     if (posState === 'PAID') {
@@ -190,6 +209,7 @@ export default function POSPage() {
     setCustomDesc('');
     setPollCount(0);
     setSimulating(false);
+    setCountdown(null);
   }
 
   // ── PAID ──────────────────────────────────────────────────────────────────
@@ -453,25 +473,22 @@ export default function POSPage() {
                     </div>
                   </div>
 
-                  {/* Simulate button */}
-                  <button
-                    id="pos-simulate-payment"
-                    onClick={simulatePayment}
-                    disabled={simulating}
-                    className="w-full py-4 rounded-2xl bg-[#00D084] text-[#040817] font-black text-sm flex items-center justify-center gap-2 hover:bg-[#00E676] shadow-[0_0_20px_#00D08430] hover:shadow-[0_0_32px_#00D08460] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    {simulating ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-[#040817] border-t-transparent rounded-full animate-spin" />
-                        Verifying…
-                      </>
-                    ) : (
-                      <>
-                        <CheckCircle size={16} />
-                        Simulate Successful Transfer
-                      </>
-                    )}
-                  </button>
+                  {/* Countdown UI */}
+                  {countdown !== null && (
+                    <div className="w-full py-4 rounded-2xl bg-[#00D084] text-[#040817] font-black text-sm flex items-center justify-center gap-2 shadow-[0_0_20px_#00D08430]">
+                      {simulating || countdown === 0 ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-[#040817] border-t-transparent rounded-full animate-spin" />
+                          Verifying…
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-4 h-4 border-2 border-[#040817] border-t-transparent rounded-full animate-spin" />
+                          Auto-verifying in {countdown}s…
+                        </>
+                      )}
+                    </div>
+                  )}
 
                   <button
                     onClick={resetPOS}

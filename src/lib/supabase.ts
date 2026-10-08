@@ -54,6 +54,47 @@ export const mockOrders: Order[] = [
     status: 'FLAGGED',
     created_at: new Date(Date.now() - 1800000).toISOString(),
   },
+  {
+    id: 'ord-004',
+    ref: 'TS-404',
+    items: [
+      { product_id: 'prod-3', product_name: 'Product C', quantity: 3, unit_price: 15000 },
+    ],
+    total: 45000,
+    status: 'PAID',
+    created_at: new Date(Date.now() - 900000).toISOString(),
+  },
+  {
+    id: 'ord-005',
+    ref: 'TS-505',
+    items: [
+      { product_id: 'prod-1', product_name: 'Product A', quantity: 2, unit_price: 10000 },
+    ],
+    total: 20000,
+    status: 'PENDING',
+    created_at: new Date(Date.now() - 600000).toISOString(),
+  },
+  {
+    id: 'ord-006',
+    ref: 'TS-606',
+    items: [
+      { product_id: 'prod-2', product_name: 'Product B', quantity: 4, unit_price: 5000 },
+      { product_id: 'prod-3', product_name: 'Product C', quantity: 1, unit_price: 15000 },
+    ],
+    total: 35000,
+    status: 'PAID',
+    created_at: new Date(Date.now() - 300000).toISOString(),
+  },
+  {
+    id: 'ord-007',
+    ref: 'TS-707',
+    items: [
+      { product_id: 'prod-1', product_name: 'Product A', quantity: 10, unit_price: 10000 },
+    ],
+    total: 100000,
+    status: 'FLAGGED',
+    created_at: new Date(Date.now() - 150000).toISOString(),
+  },
 ];
 
 // ─── Mock Helpers ──────────────────────────────────────────────────────────────
