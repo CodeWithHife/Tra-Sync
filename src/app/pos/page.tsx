@@ -4,18 +4,18 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Shield, ShoppingCart, Plus, Minus, Trash2, Zap,
-  CheckCircle, Clock, AlertTriangle, X, Package,
-  ArrowLeft, RefreshCw,
+  CheckCircle2, Clock, AlertTriangle, X, Package,
+  ArrowLeft, RefreshCw, Radio, Lock
 } from 'lucide-react';
 import { CartItem, Order, Product } from '@/types';
 
 // ── Static product catalog (mock, no DB needed) ───────────────────────────────
 const CATALOG: Product[] = [
-  { id: 'prod-1', name: 'Product A',    price: 10000, stock_available: 50, stock_reserved: 0 },
-  { id: 'prod-2', name: 'Product B',    price: 5000,  stock_available: 80, stock_reserved: 0 },
-  { id: 'prod-3', name: 'Product C',    price: 15000, stock_available: 30, stock_reserved: 0 },
-  { id: 'prod-4', name: 'Product D',    price: 8000,  stock_available: 60, stock_reserved: 0 },
-  { id: 'prod-5', name: 'Premium Item', price: 25000, stock_available: 20, stock_reserved: 0 },
+  { id: 'prod-1', name: 'Product A (Wireless Scanner)', price: 10000, stock_available: 50, stock_reserved: 0 },
+  { id: 'prod-2', name: 'Product B (Receipt Paper Pack)', price: 5000,  stock_available: 80, stock_reserved: 0 },
+  { id: 'prod-3', name: 'Product C (Thermal Printer)', price: 15000, stock_available: 30, stock_reserved: 0 },
+  { id: 'prod-4', name: 'Product D (Cash Drawer)', price: 8000,  stock_available: 60, stock_reserved: 0 },
+  { id: 'prod-5', name: 'Premium POS Till Node', price: 25000, stock_available: 20, stock_reserved: 0 },
 ];
 
 type POSState = 'BUILDING' | 'RESERVED' | 'POLLING' | 'PAID' | 'FLAGGED';
@@ -99,16 +99,15 @@ export default function POSPage() {
           setPosState('FLAGGED');
         }
       } catch {
-        // silently retry
+        // retry silently
       }
     }, 2000);
   }, []);
 
-  // ── Demo: simulate payment after 8 seconds ──────────────────────────────────
+  // ── Demo: simulate payment webhook after 8 seconds ─────────────────────────
   useEffect(() => {
     if (posState === 'POLLING' && order) {
       const timer = setTimeout(async () => {
-        // Simulate flutterwave webhook hitting our API
         await fetch('/api/webhooks/flutterwave', {
           method: 'POST',
           headers: {
@@ -143,38 +142,50 @@ export default function POSPage() {
   // ══════════════════════════════════════════════════════════════════════════════
   if (posState === 'PAID') {
     return (
-      <div className="min-h-screen bg-[#020d06] flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#00ff8708] via-transparent to-[#00d4ff08]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00ff87] opacity-[0.04] rounded-full blur-3xl" />
+      <div className="min-h-screen bg-[#090D16] text-white font-sans flex flex-col items-center justify-center px-6 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 text-center animate-slide-up">
-          {/* Outer ring */}
-          <div className="relative mx-auto w-40 h-40 mb-8">
-            <div className="absolute inset-0 rounded-full bg-[#00ff87] opacity-10 animate-ping" />
-            <div className="absolute inset-2 rounded-full bg-[#00ff87] opacity-10 animate-ping" style={{ animationDelay: '0.3s' }} />
-            <div className="w-40 h-40 rounded-full bg-[#0a1f10] border-4 border-[#00ff87] flex items-center justify-center relative">
-              <CheckCircle size={60} className="text-[#00ff87]" />
+        <div className="relative z-10 text-center space-y-6 max-w-md w-full">
+          {/* Outer glowing icon ring */}
+          <div className="relative mx-auto w-28 h-28">
+            <div className="w-28 h-28 rounded-full bg-[#10B981]/20 border-2 border-[#10B981] flex items-center justify-center shadow-2xl shadow-[#10B981]/30">
+              <CheckCircle2 className="w-14 h-14 text-[#10B981]" />
             </div>
           </div>
 
-          <h1 className="text-5xl font-black text-white mb-2">PAYMENT VERIFIED</h1>
-          <div className="text-2xl font-bold text-[#00ff87] mb-6 tracking-wider">
-            — STOCK RELEASED —
+          <div className="space-y-1">
+            <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">PAYMENT VERIFIED</h1>
+            <div className="text-lg font-bold text-[#10B981] tracking-wider uppercase flex items-center justify-center gap-1.5">
+              <Lock className="w-4 h-4" /> STOCK RELEASE AUTHORIZED
+            </div>
           </div>
 
-          <div className="glass rounded-2xl p-6 max-w-sm mx-auto mb-8">
-            <div className="text-slate-400 text-sm mb-1">Transaction Reference</div>
-            <div className="text-white font-mono text-2xl font-bold mb-4">{order?.ref}</div>
-            <div className="text-slate-400 text-sm mb-1">Amount Confirmed</div>
-            <div className="gradient-text-green text-3xl font-black">{fmt(order?.total ?? 0)}</div>
+          <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-3 font-mono text-xs">
+            <div className="flex justify-between items-center text-slate-400">
+              <span>Transaction Reference</span>
+              <span className="text-white font-bold text-sm">{order?.ref}</span>
+            </div>
+            <div className="flex justify-between items-center text-slate-400 border-t border-slate-800 pt-3">
+              <span>Amount Confirmed</span>
+              <span className="text-[#10B981] font-black text-2xl">{fmt(order?.total ?? 0)}</span>
+            </div>
+            <div className="bg-[#062c1d]/60 border border-[#10B981]/40 rounded-xl p-3 text-[#10B981] text-center font-bold text-[11px]">
+              ✓ INBOUND: ZENITH BANK • OLADIPO F.
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button onClick={resetPOS} className="btn-primary flex items-center gap-2">
-              <RefreshCw size={16} /> New Transaction
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <button
+              onClick={resetPOS}
+              className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" /> Next Transaction
             </button>
-            <button onClick={() => router.push('/admin')} className="btn-ghost flex items-center gap-2">
-              View in Dashboard
+            <button
+              onClick={() => router.push('/dashboard')}
+              className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm py-3.5 rounded-xl border border-slate-700 transition-colors flex items-center justify-center gap-2"
+            >
+              Dashboard
             </button>
           </div>
         </div>
@@ -187,19 +198,24 @@ export default function POSPage() {
   // ══════════════════════════════════════════════════════════════════════════════
   if (posState === 'FLAGGED') {
     return (
-      <div className="min-h-screen bg-[#0d0404] flex flex-col items-center justify-center px-6">
-        <div className="text-center animate-slide-up">
-          <div className="w-24 h-24 rounded-full bg-[#450a0a] border-4 border-[#f87171] flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle size={40} className="text-[#f87171]" />
+      <div className="min-h-screen bg-[#090D16] text-white font-sans flex flex-col items-center justify-center px-6">
+        <div className="text-center space-y-6 max-w-md w-full">
+          <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500 flex items-center justify-center mx-auto shadow-xl shadow-red-500/20">
+            <AlertTriangle className="w-10 h-10 text-red-400" />
           </div>
-          <h1 className="text-4xl font-black text-white mb-2">TRANSACTION FLAGGED</h1>
-          <p className="text-[#f87171] text-lg mb-6">Discrepancy detected — stock remains locked</p>
-          <div className="glass rounded-xl p-5 max-w-xs mx-auto mb-8">
-            <div className="text-slate-400 text-sm mb-1">Flagged Reference</div>
-            <div className="text-white font-mono text-xl font-bold">{order?.ref}</div>
+          <div className="space-y-1">
+            <h1 className="text-3xl font-black text-white">TRANSACTION FLAGGED</h1>
+            <p className="text-red-400 text-sm font-semibold">Discrepancy detected — stock remains locked</p>
           </div>
-          <button onClick={resetPOS} className="btn-ghost border-[#f87171] text-[#f87171] hover:bg-[#f8717115] flex items-center gap-2">
-            <X size={16} /> Cancel & Reset
+          <div className="bg-[#0F172A] border border-slate-800 rounded-2xl p-5 text-center font-mono text-xs">
+            <div className="text-slate-400">Flagged Reference</div>
+            <div className="text-white text-xl font-bold mt-1">{order?.ref}</div>
+          </div>
+          <button
+            onClick={resetPOS}
+            className="w-full bg-slate-800 hover:bg-slate-700 text-red-400 font-bold text-sm py-3.5 rounded-xl border border-red-500/30 transition-colors flex items-center justify-center gap-2"
+          >
+            <X className="w-4 h-4" /> Cancel &amp; Reset Terminal
           </button>
         </div>
       </div>
@@ -207,80 +223,100 @@ export default function POSPage() {
   }
 
   // ══════════════════════════════════════════════════════════════════════════════
-  //  WAITING MODAL (POLLING STATE)
+  //  MAIN POS INTERFACE
   // ══════════════════════════════════════════════════════════════════════════════
   const showModal = posState === 'POLLING' || posState === 'RESERVED';
 
   return (
-    <div className="min-h-screen bg-[#040817] relative">
-      {/* Nav */}
-      <nav className="bg-[#080f2e] border-b border-[#0f1a3e] px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#090D16] text-white font-sans flex flex-col selection:bg-[#10B981] selection:text-[#090D16]">
+      {/* Top Navbar */}
+      <nav className="bg-[#090D16]/95 border-b border-slate-800/80 px-6 py-4 flex items-center justify-between sticky top-0 z-40 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/')} className="text-slate-500 hover:text-white transition-colors">
-            <ArrowLeft size={20} />
+          <button onClick={() => router.push('/dashboard')} className="text-slate-400 hover:text-white transition-colors">
+            <ArrowLeft className="w-5 h-5" />
           </button>
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#00d4ff] to-[#0066ff] flex items-center justify-center">
-            <Shield size={14} className="text-[#040817]" />
+          <div 
+            onClick={() => router.push('/')}
+            className="w-8 h-8 rounded-xl bg-[#10B981]/15 border border-[#10B981]/40 flex items-center justify-center text-[#10B981] cursor-pointer"
+          >
+            <Shield className="w-4 h-4 fill-[#10B981]/20" />
           </div>
-          <span className="font-black tracking-widest text-white text-lg">
-            TRA<span className="text-[#00d4ff]">-SYNC</span>
-            <span className="text-slate-500 font-normal text-sm ml-2">POS Terminal</span>
-          </span>
+          <div>
+            <span className="font-black tracking-tight text-white text-lg">
+              TRA<span className="text-[#10B981]">-SYNC</span>
+            </span>
+            <span className="text-slate-400 text-xs font-mono ml-2 hidden sm:inline">POS Node 01</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#00ff87] animate-blink" />
-          <span className="text-slate-400 text-sm">Protected</span>
+
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-1.5 text-[#10B981] font-mono text-xs font-bold">
+            <Radio className="w-3.5 h-3.5 animate-pulse" />
+            <span>NIBSS WEBHOOK ACTIVE</span>
+          </div>
+          <button
+            onClick={() => router.push('/admin')}
+            className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition-colors"
+          >
+            Audit Logs
+          </button>
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-6 py-8 grid lg:grid-cols-[1fr_360px] gap-6">
-        {/* ── Left: Product Catalog ──────────────────────────────────────── */}
-        <div>
-          <h2 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-            <Package size={20} className="text-[#00d4ff]" /> Product Catalog
-          </h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 grid lg:grid-cols-12 gap-6 items-start">
+        
+        {/* Left Column: Product Catalog (7 cols) */}
+        <div className="lg:col-span-7 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-white font-bold text-lg flex items-center gap-2">
+              <Package className="w-5 h-5 text-[#10B981]" /> Product Catalog
+            </h2>
+            <span className="text-slate-400 text-xs font-mono">{CATALOG.length} Items Available</span>
+          </div>
+
           <div className="grid sm:grid-cols-2 gap-4">
             {CATALOG.map((product) => {
               const inCart = cart.find((i) => i.product.id === product.id);
               return (
-                <div key={product.id} className="card p-5 hover:border-[#00d4ff40] transition-all">
-                  <div className="flex justify-between items-start mb-3">
+                <div key={product.id} className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-all space-y-4 shadow-lg shadow-[#10B981]/5">
+                  <div className="flex justify-between items-start">
                     <div>
-                      <div className="text-white font-semibold">{product.name}</div>
-                      <div className="text-slate-500 text-xs mt-0.5">
+                      <div className="text-white font-bold text-sm sm:text-base">{product.name}</div>
+                      <div className="text-slate-400 text-xs mt-0.5 font-mono">
                         Stock: {product.stock_available} available
                       </div>
                     </div>
-                    <div className="text-[#00d4ff] font-bold text-lg">{fmt(product.price)}</div>
+                    <div className="text-[#10B981] font-black text-lg font-sans">{fmt(product.price)}</div>
                   </div>
+
                   {inCart ? (
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 pt-1">
                       <button
                         onClick={() => updateQty(product.id, -1)}
-                        className="w-8 h-8 rounded-lg bg-[#0f1a3e] border border-[#1a2550] text-slate-300 hover:border-[#00d4ff] hover:text-[#00d4ff] transition-all flex items-center justify-center"
+                        className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:border-[#10B981] hover:text-[#10B981] transition-all flex items-center justify-center font-bold"
                       >
-                        <Minus size={14} />
+                        <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-white font-bold text-lg w-8 text-center">{inCart.quantity}</span>
+                      <span className="text-white font-black text-base w-8 text-center">{inCart.quantity}</span>
                       <button
                         onClick={() => updateQty(product.id, 1)}
-                        className="w-8 h-8 rounded-lg bg-[#0f1a3e] border border-[#1a2550] text-slate-300 hover:border-[#00d4ff] hover:text-[#00d4ff] transition-all flex items-center justify-center"
+                        className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:border-[#10B981] hover:text-[#10B981] transition-all flex items-center justify-center font-bold"
                       >
-                        <Plus size={14} />
+                        <Plus className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => removeItem(product.id)}
-                        className="ml-auto text-slate-600 hover:text-[#f87171] transition-colors"
+                        className="ml-auto text-slate-500 hover:text-red-400 transition-colors p-1"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   ) : (
                     <button
                       onClick={() => addToCart(product)}
-                      className="w-full py-2 rounded-lg bg-[#0f1a3e] border border-[#00d4ff20] text-[#00d4ff] text-sm font-semibold hover:bg-[#00d4ff10] hover:border-[#00d4ff] transition-all flex items-center justify-center gap-2"
+                      className="w-full py-2.5 rounded-xl bg-slate-800 border border-slate-700/80 text-[#10B981] text-xs font-bold hover:bg-[#10B981]/15 hover:border-[#10B981]/40 transition-all flex items-center justify-center gap-2"
                     >
-                      <Plus size={14} /> Add to Cart
+                      <Plus className="w-4 h-4" /> Add to Checkout
                     </button>
                   )}
                 </div>
@@ -289,116 +325,130 @@ export default function POSPage() {
           </div>
         </div>
 
-        {/* ── Right: Cart ────────────────────────────────────────────────── */}
-        <div>
-          <h2 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-            <ShoppingCart size={20} className="text-[#00d4ff]" />
-            Cart
-            {cartCount > 0 && (
-              <span className="bg-[#00d4ff] text-[#040817] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {cartCount}
-              </span>
+        {/* Right Column: Checkout Cart (5 cols) */}
+        <div className="lg:col-span-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-white font-bold text-lg flex items-center gap-2">
+              <ShoppingCart className="w-5 h-5 text-[#10B981]" />
+              Till Cart
+              {cartCount > 0 && (
+                <span className="bg-[#10B981] text-[#090D16] text-xs font-black rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </h2>
+            {cart.length > 0 && (
+              <button onClick={() => setCart([])} className="text-xs text-slate-500 hover:text-red-400">
+                Clear Cart
+              </button>
             )}
-          </h2>
+          </div>
 
-          <div className="card p-5 min-h-[300px] flex flex-col">
+          <div className="bg-[#0F172A]/90 border border-slate-800 rounded-2xl p-6 min-h-[340px] flex flex-col justify-between shadow-xl shadow-[#10B981]/5">
             {cart.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
-                <ShoppingCart size={40} className="text-slate-700 mb-3" />
-                <p className="text-slate-600">Cart is empty</p>
-                <p className="text-slate-700 text-xs mt-1">Add products from the catalog</p>
+              <div className="flex-1 flex flex-col items-center justify-center text-center py-12 space-y-3">
+                <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-600">
+                  <ShoppingCart className="w-8 h-8" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-slate-300 font-semibold text-sm">Cart is Empty</p>
+                  <p className="text-slate-500 text-xs">Add items from the catalog on the left</p>
+                </div>
               </div>
             ) : (
-              <>
-                <div className="flex-1 space-y-3 mb-4">
+              <div className="flex-1 flex flex-col justify-between space-y-6">
+                <div className="space-y-3 divide-y divide-slate-800/80 max-h-[260px] overflow-y-auto pr-1">
                   {cart.map((item) => (
-                    <div key={item.product.id} className="flex items-center justify-between py-3 border-b border-[#0f1a3e]">
+                    <div key={item.product.id} className="flex items-center justify-between pt-3 first:pt-0">
                       <div>
-                        <div className="text-white text-sm font-medium">{item.product.name}</div>
-                        <div className="text-slate-500 text-xs">{fmt(item.product.price)} × {item.quantity}</div>
+                        <div className="text-white text-sm font-semibold">{item.product.name}</div>
+                        <div className="text-slate-400 text-xs">{fmt(item.product.price)} × {item.quantity}</div>
                       </div>
-                      <div className="text-[#00d4ff] font-bold text-sm">
+                      <div className="text-[#10B981] font-bold text-sm font-sans">
                         {fmt(item.product.price * item.quantity)}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Total */}
-                <div className="border-t border-[#0f1a3e] pt-4 mb-5">
+                <div className="space-y-4 pt-4 border-t border-slate-800">
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Total</span>
-                    <span className="text-white font-black text-2xl">{fmt(cartTotal)}</span>
+                    <span className="text-slate-400 text-sm">Total Due</span>
+                    <span className="text-white font-black text-2xl font-sans">{fmt(cartTotal)}</span>
                   </div>
-                </div>
 
-                {/* Generate ref button */}
-                <button
-                  id="pos-generate-ref"
-                  onClick={generateRef}
-                  disabled={loading || posState !== 'BUILDING'}
-                  className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {loading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-[#040817] border-t-transparent rounded-full animate-spin" />
-                      Generating…
-                    </>
-                  ) : (
-                    <>
-                      <Zap size={16} /> Generate Payment Reference
-                    </>
-                  )}
-                </button>
-              </>
+                  <button
+                    id="pos-generate-ref"
+                    onClick={generateRef}
+                    disabled={loading || posState !== 'BUILDING'}
+                    className="w-full bg-[#10B981] hover:bg-[#059669] text-[#090D16] font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-[#090D16] border-t-transparent rounded-full animate-spin" />
+                        <span>Generating Reference…</span>
+                      </>
+                    ) : (
+                      <>
+                        <Zap className="w-4 h-4" /> Generate Payment Reference
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>
+
       </div>
 
-      {/* ── Waiting Modal ─────────────────────────────────────────────────── */}
+      {/* ── Waiting Modal (Polling State) ────────────────────────────────── */}
       {showModal && order && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center px-4">
-          <div className="glass rounded-3xl p-8 max-w-md w-full text-center animate-slide-up">
-            {/* Pulsing logo */}
-            <div className="relative mx-auto w-20 h-20 mb-6">
-              <div className="absolute inset-0 rounded-full bg-[#00d4ff] opacity-20 animate-ping" />
-              <div className="w-20 h-20 rounded-full bg-[#0f1a3e] border-2 border-[#00d4ff40] flex items-center justify-center animate-pulse-glow">
-                <Shield size={32} className="text-[#00d4ff]" />
+        <div className="fixed inset-0 bg-[#090D16]/80 backdrop-blur-md z-50 flex items-center justify-center px-4">
+          <div className="bg-[#0F172A] border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-6 shadow-2xl shadow-[#10B981]/10 animate-in fade-in zoom-in-95 duration-200">
+            
+            <div className="relative mx-auto w-20 h-20">
+              <div className="w-20 h-20 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center animate-pulse">
+                <Shield className="w-9 h-9 text-[#10B981]" />
               </div>
             </div>
 
-            <div className="badge-reserved inline-block mb-3">INVENTORY RESERVED</div>
-            <h2 className="text-3xl font-black text-white mb-1">{order.ref}</h2>
-            <div className="text-[#00d4ff] text-2xl font-bold mb-6">{fmt(order.total)}</div>
+            <div className="space-y-1">
+              <span className="bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 text-[10px] font-mono font-bold px-3 py-1 rounded-full uppercase">
+                INVENTORY RESERVED
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white pt-2">{order.ref}</h2>
+              <div className="text-[#10B981] text-2xl font-black">{fmt(order.total)}</div>
+            </div>
 
-            {/* Items summary */}
-            <div className="bg-[#040817] rounded-xl p-4 mb-6 text-left">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 text-left font-mono text-xs space-y-2">
               {cart.map((item) => (
-                <div key={item.product.id} className="flex justify-between text-sm py-1.5 border-b border-[#0f1a3e] last:border-0">
+                <div key={item.product.id} className="flex justify-between py-1 border-b border-slate-800 last:border-0">
                   <span className="text-slate-400">{item.product.name} ×{item.quantity}</span>
-                  <span className="text-white">{fmt(item.product.price * item.quantity)}</span>
+                  <span className="text-white font-bold">{fmt(item.product.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
 
-            {/* Waiting indicator */}
-            <div className="flex items-center justify-center gap-3 bg-[#312e0a] border border-[#fbbf2430] rounded-xl p-4 mb-6">
-              <Clock size={20} className="text-[#fbbf24] animate-spin" style={{ animationDuration: '3s' }} />
-              <div className="text-left">
-                <div className="text-[#fbbf24] font-semibold text-sm">Waiting for Bank Confirmation…</div>
-                <div className="text-slate-500 text-xs mt-0.5">
-                  Auto-checking every 2s · Checked {pollCount}×
+            <div className="bg-[#062c1d]/60 border border-[#10B981]/40 rounded-xl p-4 flex items-center gap-3 text-left">
+              <Clock className="w-5 h-5 text-[#10B981] shrink-0 animate-spin" />
+              <div>
+                <div className="text-white font-bold text-xs">Waiting for Bank Webhook…</div>
+                <div className="text-slate-400 text-[11px] mt-0.5">
+                  Checking NIBSS gateway every 2s · Check #{pollCount}
                 </div>
               </div>
             </div>
 
-            <p className="text-slate-600 text-xs mb-4">
-              Demo: payment auto-confirms in ~8 seconds
+            <p className="text-slate-500 text-[11px]">
+              Demo Mode: Webhook auto-confirms in ~8 seconds
             </p>
 
-            <button onClick={resetPOS} className="text-slate-600 hover:text-slate-400 text-sm flex items-center gap-1 mx-auto">
-              <X size={14} /> Cancel Transaction
+            <button 
+              onClick={resetPOS} 
+              className="text-slate-400 hover:text-red-400 text-xs font-semibold flex items-center justify-center gap-1 mx-auto transition-colors"
+            >
+              <X className="w-3.5 h-3.5" /> Cancel Transaction
             </button>
           </div>
         </div>
