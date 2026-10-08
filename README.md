@@ -102,6 +102,15 @@ npm run start
 
 ---
 
+## 👥 Project Team Members
+
+- **Oluwafemi Ajifowowe**
+- **Obadimu Ifeoluwa**
+- **Dosunmu Victor**
+- **Monsur**
+
+---
+
 ## 🛡️ License
 
 This project is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.

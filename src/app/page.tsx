@@ -531,9 +531,12 @@ export default function HomePage() {
       </section>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-slate-800/80 py-10 px-6 text-center text-slate-500 text-xs space-y-2 bg-slate-950">
+      <footer className="border-t border-slate-800/80 py-10 px-6 text-center text-slate-500 text-xs space-y-3 bg-slate-950">
         <div>© 2026 TRA-SYNC · Anti-Fraud Real-Time Payment & Inventory Synchronization</div>
-        <div className="text-slate-600 font-mono">Built for Nigerian Retail Merchants & Enterprise Tills</div>
+        <div className="text-slate-400 font-medium">
+          Project Team: <span className="text-[#10B981]">Oluwafemi Ajifowowe</span> · <span className="text-[#10B981]">Obadimu Ifeoluwa</span> · <span className="text-[#10B981]">Dosunmu Victor</span> · <span className="text-[#10B981]">Monsur</span>
+        </div>
+        <div className="text-slate-600 font-mono text-[11px]">Built for Nigerian Retail Merchants & Enterprise Tills</div>
       </footer>
     </div>
   );
